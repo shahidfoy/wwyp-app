@@ -1,0 +1,7 @@
+{
+  "name": "wwyp-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
