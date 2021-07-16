@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>What Would You Pay</ion-card-title>
+        <ion-card-subtitle>Register for an account here</ion-card-subtitle>
+      </ion-card-header>
+  
+      <ion-card-content>
+        <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm.value)">
+          <ion-item>
+            <ion-label position="floating">First Name </ion-label>
+            <ion-input type="text" name="firstName" required ngModel #firstNameInput="ngModel"></ion-input>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="floating">Last Name </ion-label>
+            <ion-input type="text" name="lastName" required ngModel #lastNameInput="ngModel"></ion-input>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="floating">Username </ion-label>
+            <ion-input type="text" name="username" required ngModel #usernameInput="ngModel"></ion-input>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="floating">Email </ion-label>
+            <ion-input type="email" name="email" required ngModel #emailInput="ngModel"></ion-input>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="floating">Password </ion-label>
+            <ion-input type="password" name="password" required ngModel #passwordInput="ngModel"></ion-input>
+          </ion-item>
+  
+          <ion-button
+            [disabled]="registerForm.invalid || isLoading"
+            type="submit"
+            name="button"
+            expand="block">
+            <span *ngIf="isLoading">Loading...</span>
+            <span *ngIf="!isLoading">Register</span>
+          </ion-button>
+        </form>
+
+        <br>
+        <p>Already have an account? <a routerLink="/login">Log In</a></p>
+      </ion-card-content>
+    </ion-card>
+</ion-content>
