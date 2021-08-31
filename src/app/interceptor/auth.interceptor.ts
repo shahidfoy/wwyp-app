@@ -9,14 +9,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('intercepting');
         if (request.url.includes(`${this.authenticationService.host}/user/login`) ||
             request.url.includes(`${this.authenticationService.host}/user/register`)) 
         {
             return next.handle(request);
         }
 
-        console.log('loading token for backend');
         this.authenticationService.loadToken();
         const token = this.authenticationService.getToken();
         const authorizationRequest = request.clone({ setHeaders: { Authorization: `Bearer ${token}` }});
