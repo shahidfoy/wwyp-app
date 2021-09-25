@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
@@ -23,20 +23,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
   selected: string = 'contracts';
   contracts: Contract[];
 
-  constructor(public modalController: ModalController,
-              private settingsService: SettingsService,
-              private authenticationService: AuthenticationService,
-              private contractService: ContractService,
-              private router: Router) {}
+  constructor(
+    public modalController: ModalController,
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService,
+    private contractService: ContractService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {}
 
   ngOnInit() {
-    this.user = this.authenticationService.getUserFromLocalCache();
+    this.subscriptions.push(
+      this.activatedRoute.params.subscribe(() => {
+        this.user = this.authenticationService.getUserFromLocalCache();
+        this.getContracts(this.user.id);
+      }));
+    
     this.subscriptions.push(
       this.settingsService.darkMode.subscribe((isDarkMode: boolean) => {
         this.isDarkMode = isDarkMode;
-      })
-    );
-    this.getContracts(this.user.id);
+      }));
   }
 
   ngOnDestroy() {

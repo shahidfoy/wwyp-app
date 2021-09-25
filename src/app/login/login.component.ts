@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         (response: HttpResponse<User>) => {
           console.log(response.headers.getAll);
           const token = response.headers.get(HeaderType.JWT_TOKEN);
-          console.log('TOKEN', token);
           this.authenticationService.saveToken(token);
           this.authenticationService.addUserToLocalCache(response.body);
           this.router.navigateByUrl('/marketboard/profile');

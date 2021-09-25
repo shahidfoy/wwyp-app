@@ -30,7 +30,7 @@ export class AuthenticationService {
     this.loggedInUsername = null;
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    localStorage.removeItem('users');
+    // localStorage.removeItem('users');
   }
 
   public saveToken(token: string): void {
