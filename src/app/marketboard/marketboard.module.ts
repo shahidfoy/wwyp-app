@@ -7,6 +7,7 @@ import { ChatComponent } from './chat/chat.component';
 import { ProfileComponent } from './profile/profile.component';
 import { InquiriesComponent } from './inquiries/inquiries.component';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
+import { NewContractModalComponent } from './new-contract-modal/new-contract-modal.component';
 
 
 
@@ -16,6 +17,7 @@ import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-mod
     ChatComponent,
     EditProfileModalComponent,
     InquiriesComponent,
+    NewContractModalComponent,
     ProfileComponent
   ],
   imports: [

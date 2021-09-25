@@ -1,0 +1,53 @@
+<app-header subtitle="New Contract" subtitleIcon=""></app-header>
+<ion-content>
+  <h2>New Contract</h2>
+
+  <form #newContractForm="ngForm" (ngSubmit)="createNewContract(newContractForm.value)">
+    
+    <ion-item>
+      <ion-label>Type </ion-label>
+      <!-- <ion-input type="text" name="type" required ngModel #typeInput="ngModel"></ion-input> -->
+      <ion-select name="type" required ngModel #typeInput="ngModel">
+        <ion-select-option value="sale">For Sale</ion-select-option>
+        <ion-select-option value="maintenance">Maintenance</ion-select-option>
+        <ion-select-option value="rental">Rental</ion-select-option>
+        <ion-select-option value="construction">Construction</ion-select-option>
+        <ion-select-option value="services">Services</ion-select-option>
+        <ion-select-option value="other">Other</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Subject </ion-label>
+      <ion-input type="text" name="subject" required ngModel #subjectInput="ngModel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Body </ion-label>
+      <ion-textarea type="text" name="body" rows="6" cols="20" required ngModel #bodyInput="ngModel"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Legal Agreement </ion-label>
+      <ion-input type="text" name="legalAgreement" required ngModel #legalAgreementInput="ngModel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <!-- TODO:: ADD FEATURE TO UPLOAD CONTRACT RELATED IMAGES -->
+      Upload contract related images
+    </ion-item>
+
+    <ion-button
+      [disabled]="newContractForm.invalid || isLoading"
+      type="submit"
+      name="button"
+      expand="block">
+      <span *ngIf="isLoading">Loading...</span>
+      <span *ngIf="!isLoading">Create</span>
+    </ion-button>
+  </form>
+
+  <div class="contract-button-group">
+    <ion-button class="pull-right" size="small" color="light" (click)="dismiss()">Close</ion-button>
+  </div>
+</ion-content>

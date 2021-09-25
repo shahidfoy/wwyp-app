@@ -1,11 +1,6 @@
 <app-header subtitle="Profile" subtitleIcon="person-circle-outline"></app-header>
 
 <ion-content>
-  <!-- <p>
-    Hi {{ user.username }} profile works!
-  </p> -->
-  
-
 
   <ion-card>
 
@@ -32,56 +27,51 @@
   </ion-card>
   
   
-  <ion-button expand="full">
+  <ion-button expand="full" (click)="createNewContract()">
     <ion-icon slot="start" name="help-buoy-outline"></ion-icon> Create new inquiry
   </ion-button>
 
-  <h2>{{ user.username }} inquiries:</h2>
-  <ion-card>
-    <ion-item>
-      <ion-icon name="reader-outline" slot="start"></ion-icon>
-      <ion-label>inquiry</ion-label>
-      <ion-button slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content>
-      This is content about your inquiry
-    </ion-card-content>
-  </ion-card>
+  <ion-segment (ionChange)="segmentChanged($event)" [(ngModel)]="selected">
+    <ion-segment-button value="contracts">
+      <ion-label >Contracts</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="offers">
+      <ion-label>Offers</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-  <ion-card>
-    <ion-item>
-      <ion-icon name="reader-outline" slot="start"></ion-icon>
-      <ion-label>inquiry</ion-label>
-      <ion-button slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content>
-      This is content about your inquiry
-    </ion-card-content>
-  </ion-card>
+  <section *ngIf="selected === 'contracts'">
+    <!-- <h2>{{ user.username }}'s contracts:</h2> -->
 
-  <ion-card>
-    <ion-item>
-      <ion-icon name="reader-outline" slot="start"></ion-icon>
-      <ion-label>inquiry</ion-label>
-      <ion-button slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content>
-      This is content about your inquiry
-    </ion-card-content>
-  </ion-card>
+    <ion-card *ngFor="let contract of contracts">
+      <ion-item>
+        <ion-icon name="reader-outline" slot="start"></ion-icon>
+        <ion-label>{{ contract.subject }}</ion-label>
+        <ion-button slot="end" [routerLink]="['/marketboard/contract']" [queryParams]="{ id: contract.id }">View</ion-button>
+      </ion-item>
+    
+      <ion-card-content>
+        {{ contract.body }}
+      </ion-card-content>
+    </ion-card>
 
-  <ion-card>
-    <ion-item>
-      <ion-icon name="reader-outline" slot="start"></ion-icon>
-      <ion-label>inquiry</ion-label>
-      <ion-button slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content>
-      This is content about your inquiry
-    </ion-card-content>
-  </ion-card>
+  </section>
+
+  <section *ngIf="selected === 'offers'">
+    <!-- <h2>{{ user.username }}'s offers:</h2> -->
+
+    <ion-card>
+      <ion-item>
+        <ion-icon name="reader-outline" slot="start"></ion-icon>
+        <ion-label>offer</ion-label>
+        <ion-button slot="end">View</ion-button>
+      </ion-item>
+    
+      <ion-card-content>
+        This is content about one of your offers.
+      </ion-card-content>
+    </ion-card>
+
+  </section>
+
 </ion-content>

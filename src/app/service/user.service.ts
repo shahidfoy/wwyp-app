@@ -59,7 +59,7 @@ export class UserService {
     return null;
   }
 
-  public editUserFormData(loggedInUserEmail: string, user: User) {
+  public editUserFormData(loggedInUserEmail: string, user: User): FormData {
     const formData: FormData = new FormData();
     formData.append('currentUsername', loggedInUserEmail);
     formData.append('firstName', user.firstName);

@@ -57,6 +57,7 @@ export class EditProfileModalComponent implements OnInit, OnDestroy {
           this.authenticationService.addUserToLocalCache(response);
           this.user = response;
           window.location.reload();
+          // TODO:: NOTIFY USER OF SUCCESS
         },
         (errorResponse: HttpErrorResponse) => {
           // TODO:: NOTIFIY USER OF ERROR

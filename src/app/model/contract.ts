@@ -3,8 +3,8 @@ import { User } from "./user";
 
 export class Contract {
     public id: number;
-    public contractee: User;
-    public contractor: User;
+    public contracteeId: number;
+    public contractorId: number;
     public status: string;
     public type: string;
     public subject: string;
@@ -17,8 +17,8 @@ export class Contract {
 
     constructor() {
         this.id = null;
-        this.contractee = null;
-        this.contractor = null;
+        this.contracteeId = null;
+        this.contractorId = null;
         this.status = '';
         this.type = '';
         this.subject = '';
