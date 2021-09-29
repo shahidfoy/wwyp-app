@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { User } from '../model/user';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
 
-  // TODO:: GET DARK MODE PREFERENCE FROM USER INFO
-  isDarkMode = false;
-  darkMode: BehaviorSubject<boolean> = new BehaviorSubject(this.isDarkMode);
+  user: User;
+  isDarkMode: boolean = false;
+  darkMode: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) {
+    if (this.authenticationService.getUserFromLocalCache()) {
+      this.user = this.authenticationService.getUserFromLocalCache();
+      this.isDarkMode = this.user.darkModeEnabled;
+      this.isDarkMode ? this.darkModeOn() : this.darkModeOff();
+    } else {
+      this.darkModeOff();
+    }
+  }
 
   public toggleDarkTheme(): void {
     this.isDarkMode = !this.isDarkMode;

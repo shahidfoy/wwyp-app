@@ -15,6 +15,11 @@ import { UserService } from 'src/app/service/user.service';
 export class EditProfileModalComponent implements OnInit, OnDestroy {
 
   @Input() user: User;
+  usernameInput: string;
+  firstNameInput: string;
+  lastNameInput: string;
+  emailInput: string;
+
   isDarkMode: boolean;
   subscriptions: Subscription[] = [];
 
@@ -24,6 +29,11 @@ export class EditProfileModalComponent implements OnInit, OnDestroy {
               private userService: UserService) { }
 
   ngOnInit() {
+    this.usernameInput = this.user.username;
+    this.firstNameInput = this.user.firstName;
+    this.lastNameInput = this.user.lastName;
+    this.emailInput = this.user.email;
+
     this.subscriptions.push(
       this.settingsService.darkMode.subscribe((isDarkMode: boolean) => {
         this.isDarkMode = isDarkMode;
@@ -45,6 +55,22 @@ export class EditProfileModalComponent implements OnInit, OnDestroy {
   }
 
   public toggleDarkTheme(): void {
+    this.user.darkModeEnabled = !this.user.darkModeEnabled;;
+    const formData: FormData = this.userService.editUserFormData(this.user.email, this.user);
+
+    this.subscriptions.push(
+      this.userService.editUser(formData).subscribe(
+        (response: User) => {
+          this.authenticationService.addUserToLocalCache(response);
+          this.user = response;
+          // TODO:: NOTIFY USER OF SUCCESS
+        },
+        (errorResponse: HttpErrorResponse) => {
+          // TODO:: NOTIFIY USER OF ERROR
+          console.log(errorResponse);
+        }
+      )
+    );
     this.settingsService.toggleDarkTheme();
   }
 

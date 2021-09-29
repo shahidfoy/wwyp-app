@@ -18,9 +18,9 @@ export class AppComponent {
     // Query for the toggle that is used to change between themes
     // const toggle: any = document.querySelector('#themeToggle');
 
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    // const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-    prefersDark.matches ? this.settingsService.darkModeOn() : this.settingsService.darkModeOff();
+    // prefersDark.matches ? this.settingsService.darkModeOn() : this.settingsService.darkModeOff();
     
     // // Listen for changes to the prefers-color-scheme media query
     // prefersDark.addListener((e) => checkToggle(e.matches));

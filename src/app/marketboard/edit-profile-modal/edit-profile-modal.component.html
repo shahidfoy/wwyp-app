@@ -15,22 +15,22 @@
 
     <ion-item>
       <ion-label>Username </ion-label>
-      <ion-input type="text" name="username" [placeholder]="user.username" required ngModel #usernameInput="ngModel"></ion-input>
+      <ion-input type="text" name="username" [(ngModel)]="usernameInput"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>First name </ion-label>
-      <ion-input type="text" name="firstName" [placeholder]="user.firstName" required ngModel #firstNameInput="ngModel"></ion-input>
+      <ion-input type="text" name="firstName" [(ngModel)]="firstNameInput"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Last name </ion-label>
-      <ion-input type="text" name="lastName" [placeholder]="user.lastName" required ngModel #lastNameInput="ngModel"></ion-input>
+      <ion-input type="text" name="lastName" [(ngModel)]="lastNameInput"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Email </ion-label>
-      <ion-input type="email" name="email" [placeholder]="user.email" required ngModel #emailInput="ngModel"></ion-input>
+      <ion-input type="email" name="email" [(ngModel)]="emailInput"></ion-input>
     </ion-item>
 
     <ion-item>

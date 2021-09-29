@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
@@ -6,6 +7,7 @@ import { Contract } from 'src/app/model/contract';
 import { User } from 'src/app/model/user';
 import { ContractService } from 'src/app/service/contract.service';
 import { SettingsService } from 'src/app/service/settings.service';
+import { UserService } from 'src/app/service/user.service';
 import { AuthenticationService } from '../../service/authentication.service';
 import { EditProfileModalComponent } from '../edit-profile-modal/edit-profile-modal.component';
 import { NewContractModalComponent } from '../new-contract-modal/new-contract-modal.component';
@@ -19,7 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   user: User;
   subscriptions: Subscription[] = [];
-  isDarkMode: boolean;
+  isDarkMode: boolean = false;
   selected: string = 'contracts';
   contracts: Contract[];
 
@@ -28,6 +30,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private contractService: ContractService,
+    private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {}
 
@@ -35,6 +38,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.activatedRoute.params.subscribe(() => {
         this.user = this.authenticationService.getUserFromLocalCache();
+        this.isDarkMode = this.user.darkModeEnabled;
+        this.isDarkMode ? this.settingsService.darkModeOn() : this.settingsService.darkModeOff();
         this.getContracts(this.user.id);
       }));
     
@@ -77,6 +82,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   public logOut(): void {
     this.authenticationService.logOut();
+    this.settingsService.darkModeOff();
     this.router.navigateByUrl('/login');
   }
 
@@ -86,6 +92,22 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public toggleDarkTheme(): void {
+    this.user.darkModeEnabled = !this.user.darkModeEnabled;;
+    const formData: FormData = this.userService.editUserFormData(this.user.email, this.user);
+
+    this.subscriptions.push(
+      this.userService.editUser(formData).subscribe(
+        (response: User) => {
+          this.authenticationService.addUserToLocalCache(response);
+          this.user = response;
+          // TODO:: NOTIFY USER OF SUCCESS
+        },
+        (errorResponse: HttpErrorResponse) => {
+          // TODO:: NOTIFIY USER OF ERROR
+          console.log(errorResponse);
+        }
+      )
+    );
     this.settingsService.toggleDarkTheme();
   }
 }

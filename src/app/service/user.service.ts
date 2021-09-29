@@ -66,6 +66,7 @@ export class UserService {
     formData.append('lastName', user.lastName);
     formData.append('username', user.username);
     formData.append('email', user.email);
+    formData.append('isDarkModeEnabled', JSON.stringify(user.darkModeEnabled));
     return formData;
   }
 

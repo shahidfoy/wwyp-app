@@ -14,6 +14,7 @@ export class User {
     public notLocked: boolean;
     public role: string;
     public authorities: string[];
+    public darkModeEnabled: boolean;
 
     constructor() {
         this.id = null;
@@ -31,5 +32,6 @@ export class User {
         this.notLocked = false;
         this.role = '';
         this.authorities = [];
+        this.darkModeEnabled = false;
     }
 }
