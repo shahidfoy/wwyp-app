@@ -12,7 +12,7 @@
       </ion-card-header>
   
       <ion-card-content>
-        <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm.value)">
+        <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)">
           <ion-item>
             <ion-label position="floating">First Name </ion-label>
             <ion-input type="text" name="firstName" required ngModel #firstNameInput="ngModel"></ion-input>

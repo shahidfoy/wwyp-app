@@ -8,15 +8,17 @@ import { ProfileComponent } from './profile/profile.component';
 import { InquiriesComponent } from './inquiries/inquiries.component';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 import { NewContractModalComponent } from './new-contract-modal/new-contract-modal.component';
+import { ContractComponent } from './contract/contract.component';
 
 
 
 @NgModule({
   declarations: [
-    MarketboardComponent,
     ChatComponent,
+    ContractComponent,
     EditProfileModalComponent,
     InquiriesComponent,
+    MarketboardComponent,
     NewContractModalComponent,
     ProfileComponent
   ],

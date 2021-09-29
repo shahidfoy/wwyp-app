@@ -1,7 +1,25 @@
-<p>
-  contract works!
-</p>
+<app-header subtitle="Contract" subtitleIcon="person-circle-outline"></app-header>
 
-{{ contract.id }}
-{{ contract.subject }}
-{{ contract.body }}
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ contract.subject }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{ contract.body }} <br>
+      {{ contract.legalAgreement }} <br>
+      {{ contract.createdDate }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="block">Make An Offer</ion-button>
+  <section>
+    <h2>Current Offers</h2>
+    <p>Total Offers: 
+      <br>
+      Highest Offer: 
+    </p>
+  </section>
+</ion-content>
+

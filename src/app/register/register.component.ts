@@ -1,5 +1,6 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HeaderType } from '../enum/header-type.enum';
@@ -31,7 +32,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  public onRegister(user: User): void {
+  public onRegister(form: NgForm): void {
+    const user: User = form.value;
     this.isLoading = true;
     this.subscriptions.push(
       this.authenticationService.register(user).subscribe(
@@ -43,6 +45,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.authenticationService.addUserToLocalCache(response.body);
           this.router.navigateByUrl('/marketboard/profile');
           this.isLoading = false;
+          form.resetForm();
         },
         (errorResponse: HttpErrorResponse) => {
           // TODO:: NOTIFIY USER OF ERROR
