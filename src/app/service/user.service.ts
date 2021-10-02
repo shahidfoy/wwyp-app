@@ -26,6 +26,14 @@ export class UserService {
     return this.http.post<User>(`${this.host}/user/edit`, formData);
   }
 
+  public findUserById(id: number): Observable<User> {
+    return this.http.get<User>(`${this.host}/user/find/id/${id}`);
+  }
+
+  public findUserByUsername(username: string): Observable<User> {
+    return this.http.get<User>(`${this.host}/user/find/username/${username}`);
+  }
+
   public getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.host}/user/list`);
   }

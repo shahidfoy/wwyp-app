@@ -3,13 +3,23 @@
 <ion-content>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>{{ contract.subject }}</ion-card-title>
+      <ion-card-title>
+        <ng-container *ngIf="contractUser | async as cUser">
+          <ion-chip>
+              <ion-avatar>
+                <img [src]="cUser.profileImageUrl">
+              </ion-avatar>
+              <ion-label>{{ cUser.username }}</ion-label>
+          </ion-chip>
+        </ng-container>
+        <h2>{{ contract.subject }}</h2>
+      </ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
-      {{ contract.body }} <br>
-      {{ contract.legalAgreement }} <br>
-      {{ contract.createdDate }}
+      <p>{{ contract.body }}</p>
+      <p>Leagal Agreement: <br> {{ contract.legalAgreement }}</p>
+      <p>Created at: {{ contract.createdDate }}</p>
     </ion-card-content>
   </ion-card>
 
