@@ -4,15 +4,17 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>
-        <ng-container *ngIf="contractUser | async as cUser">
-          <ion-chip>
-              <ion-avatar>
-                <img [src]="cUser.profileImageUrl">
-              </ion-avatar>
-              <ion-label>{{ cUser.username }}</ion-label>
-          </ion-chip>
-        </ng-container>
-        <h2>{{ contract.subject }}</h2>
+        <h2>
+          <ng-container *ngIf="contractUser | async as cUser">
+            <ion-chip>
+                <ion-avatar>
+                  <img [src]="cUser.profileImageUrl">
+                </ion-avatar>
+                <ion-label>{{ cUser.username }}</ion-label>
+            </ion-chip>
+          </ng-container>
+          {{ contract.subject }}
+        </h2>
       </ion-card-title>
     </ion-card-header>
 
@@ -31,5 +33,23 @@
       Highest Offer: 
     </p>
   </section>
+
+  <ion-card *ngFor="let offer of offers">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-chip>
+          <ion-avatar>
+            <img [src]="offer.userProfileImage">
+          </ion-avatar>
+          <ion-label>{{ offer.username }}</ion-label>
+        </ion-chip>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ offer.amount }} | {{ offer.amountType }}</p>
+      <p>{{ offer.comment }}</p>
+      <p>Created at: {{ offer.createdDate }}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 

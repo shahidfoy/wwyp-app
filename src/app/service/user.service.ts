@@ -1,6 +1,7 @@
-import { HttpClient, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CustomHttpResponse } from '../model/custom-http-response';
 import { User } from '../model/user';
@@ -38,6 +39,16 @@ export class UserService {
     return this.http.get<User[]>(`${this.host}/user/list`);
   }
 
+  public getProfileImageByUserId(id: number): Observable<string> {
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+    return this.http.get(`${this.host}/user/profile-image/id/${id}`, { headers, responseType: 'text' });
+  }
+  
+  public getProfileImageByUsername(username: string): Observable<string> {
+    const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+    return this.http.get(`${this.host}/user/profile-image/username/${username}`, { headers, responseType: 'text' });
+  }
+
   public resetPassword(email: string): Observable<CustomHttpResponse> {
     return this.http.get<CustomHttpResponse>(`${this.host}/user/resetpassword/${email}`);
   }
@@ -56,16 +67,16 @@ export class UserService {
 
   // TODO:: MIGHT REMOVE THESE BELOW
 
-  public addUsersToLocalCache(users: User[]): void {
-    localStorage.setItem('users', JSON.stringify(users));
-  }
+  // public addUsersToLocalCache(users: User[]): void {
+  //   localStorage.setItem('users', JSON.stringify(users));
+  // }
 
-  public getUsersFromLocalCache(): User[] {
-    if (localStorage.getItem('users')) {
-        return JSON.parse(localStorage.getItem('users'));
-    }
-    return null;
-  }
+  // public getUsersFromLocalCache(): User[] {
+  //   if (localStorage.getItem('users')) {
+  //       return JSON.parse(localStorage.getItem('users'));
+  //   }
+  //   return null;
+  // }
 
   public editUserFormData(loggedInUserEmail: string, user: User): FormData {
     const formData: FormData = new FormData();
