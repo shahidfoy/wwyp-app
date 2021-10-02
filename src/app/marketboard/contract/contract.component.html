@@ -21,7 +21,7 @@
     <ion-card-content>
       <p>{{ contract.body }}</p>
       <p>Leagal Agreement: <br> {{ contract.legalAgreement }}</p>
-      <p>Created at: {{ contract.createdDate }}</p>
+      <p class="pull-right">{{ timeFromNow(contract.createdDate) }}</p>
     </ion-card-content>
   </ion-card>
 
@@ -37,19 +37,20 @@
   <ion-card *ngFor="let offer of offers">
     <ion-card-header>
       <ion-card-title>
-        <ion-chip>
-          <ion-avatar>
-            <img [src]="offer.userProfileImage">
-          </ion-avatar>
-          <ion-label>{{ offer.username }}</ion-label>
-        </ion-chip>
+        <h4>
+          <ion-chip>
+            <ion-avatar>
+              <img [src]="offer.userProfileImage">
+            </ion-avatar>
+            <ion-label>{{ offer.username }}</ion-label>
+          </ion-chip>
+          {{ offer.amount }} | {{ offer.amountType }}
+        </h4>
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>{{ offer.amount }} | {{ offer.amountType }}</p>
       <p>{{ offer.comment }}</p>
-      <p>Created at: {{ offer.createdDate }}</p>
+      <p class="pull-right">{{ timeFromNow(offer.createdDate) }}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>
-

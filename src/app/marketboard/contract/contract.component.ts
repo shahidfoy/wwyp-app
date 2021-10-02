@@ -7,6 +7,7 @@ import { User } from 'src/app/model/user';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { ContractService } from 'src/app/service/contract.service';
 import { UserService } from 'src/app/service/user.service';
+import { timeFromNow } from 'src/app/shared/shared.utils';
 
 @Component({
   selector: 'app-contract',
@@ -40,6 +41,10 @@ export class ContractComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  public timeFromNow(time: Date) {
+    return timeFromNow(time);
   }
 
   private getContract(id: number): void {
