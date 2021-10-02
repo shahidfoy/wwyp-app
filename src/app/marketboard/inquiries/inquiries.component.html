@@ -1,59 +1,24 @@
 <app-header subtitle="Inquiries" subtitleIcon="help-buoy-outline"></app-header>
 <ion-content>
-  <ion-card>
+  <ion-card *ngFor="let contract of contracts">
     <ion-item>
       <ion-icon name="reader-outline" slot="start"></ion-icon>
       <ion-label>     
         <ion-chip>
           <ion-avatar>
-            <img src="https://robohash.org/shahidfoy?set=set1">
+            <img [src]="getUserProfileImage(contract.contracteeId)">
           </ion-avatar>
-          <ion-label>someone</ion-label>
+          <ion-label>{{ getUsername(contract.contracteeId) }}</ion-label>
         </ion-chip>
       </ion-label>
-      <ion-button color="light" slot="end">View</ion-button>
+      <ion-button [routerLink]="['/marketboard/contract']" [queryParams]="{ id: contract.id }" slot="end">
+        View
+      </ion-button>
     </ion-item>
   
     <ion-card-content>
-      This is content about your inquiry
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-icon name="reader-outline" slot="start"></ion-icon>
-      <ion-label>     
-        <ion-chip>
-          <ion-avatar>
-            <img src="https://robohash.org/shahidfoy?set=set1">
-          </ion-avatar>
-          <ion-label>someone</ion-label>
-        </ion-chip>
-      </ion-label>
-      <ion-button color="light" slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content>
-      This is content about your inquiry
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-item>
-      <ion-icon name="reader-outline" slot="start"></ion-icon>
-      <ion-label>     
-        <ion-chip>
-          <ion-avatar>
-            <img src="https://robohash.org/shahidfoy?set=set1">
-          </ion-avatar>
-          <ion-label>someone</ion-label>
-        </ion-chip>
-      </ion-label>
-      <ion-button color="light" slot="end">View</ion-button>
-    </ion-item>
-  
-    <ion-card-content>
-      This is content about your inquiry
+      <h2>{{ contract.subject }} <p>{{ contract.body }}</p></h2>
+      <p class="pull-right">{{ timeFromNow(contract.createdDate) }}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>
