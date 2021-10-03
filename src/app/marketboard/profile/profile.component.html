@@ -16,8 +16,10 @@
           </ion-avatar>
           <ion-label>{{ user.username }}</ion-label>
         </ion-chip>
-        <p>Rating: <br>
-            Rank: 
+        <p>
+          Rating: <!-- TODO:: MAKE A RATING SYSTEM? -->
+          <br>
+          Rank: <!-- TODO:: MAKE A RANKING SYSTEM? -->
         </p>
       </div>
       <ion-toggle #toggleDarkMode (ngModelChange)="toggleDarkTheme()" id="themeToggle" [(ngModel)]="isDarkMode"></ion-toggle>
