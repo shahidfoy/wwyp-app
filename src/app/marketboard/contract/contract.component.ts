@@ -53,17 +53,17 @@ export class ContractComponent implements OnInit, OnDestroy {
         this.contract = contract;
         this.contractUser = this.userService.findUserById(contract.contracteeId);
         this.offers = contract.offers;
-        this.getOffersUserProfileImage();
+        this.getOffersUser();
       }));
   }
 
-  private getOffersUserProfileImage() {
+  private getOffersUser() {
     this.offers.forEach((offer: Offer) => {
       this.subscriptions.push(
-        this.userService.getProfileImageByUserId(offer.userId)
-          .subscribe((userProfileImage: string) => {
-            offer.userProfileImage = userProfileImage;
-          }));
+        this.userService.findUserById(offer.userId).subscribe((user: User) => {
+          offer.username = user.username;
+          offer.userProfileImage = user.profileImageUrl;
+        }));
     });
   }
 }

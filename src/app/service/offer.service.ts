@@ -42,10 +42,6 @@ export class OfferService {
     return this.http.get<Offer[]>(`${this.host}/offer/find/user/${id}`);
   }
 
-  public findOfferByUsername(username: string): Observable<Offer[]> {
-    return this.http.get<Offer[]>(`${this.host}/offer/find/username/${username}`);
-  }
-
   public getOffers(): Observable<Offer[]> {
     return this.http.get<Offer[]>(`${this.host}/offer/find/all`);
   }

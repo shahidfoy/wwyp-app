@@ -8,6 +8,7 @@ import { User } from 'src/app/model/user';
 import { ContractService } from 'src/app/service/contract.service';
 import { SettingsService } from 'src/app/service/settings.service';
 import { UserService } from 'src/app/service/user.service';
+import { timeFromNow } from 'src/app/shared/shared.utils';
 import { AuthenticationService } from '../../service/authentication.service';
 import { EditProfileModalComponent } from '../edit-profile-modal/edit-profile-modal.component';
 import { NewContractModalComponent } from '../new-contract-modal/new-contract-modal.component';
@@ -89,6 +90,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public segmentChanged(ev: any) {
     console.log('Segment changed', ev);
     this.selected = ev.detail.value;
+  }
+
+  public timeFromNow(time: Date) {
+    return timeFromNow(time);
   }
 
   public toggleDarkTheme(): void {
