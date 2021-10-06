@@ -9,6 +9,7 @@ import { InquiriesComponent } from './inquiries/inquiries.component';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 import { NewContractModalComponent } from './new-contract-modal/new-contract-modal.component';
 import { ContractComponent } from './contract/contract.component';
+import { NewOfferModalComponent } from './new-offer-modal/new-offer-modal.component';
 
 
 
@@ -20,6 +21,7 @@ import { ContractComponent } from './contract/contract.component';
     InquiriesComponent,
     MarketboardComponent,
     NewContractModalComponent,
+    NewOfferModalComponent,
     ProfileComponent
   ],
   imports: [

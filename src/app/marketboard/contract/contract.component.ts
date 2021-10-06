@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
 import { Offer } from 'src/app/model/offer';
@@ -8,6 +9,7 @@ import { AuthenticationService } from 'src/app/service/authentication.service';
 import { ContractService } from 'src/app/service/contract.service';
 import { UserService } from 'src/app/service/user.service';
 import { timeFromNow } from 'src/app/shared/shared.utils';
+import { NewOfferModalComponent } from '../new-offer-modal/new-offer-modal.component';
 
 @Component({
   selector: 'app-contract',
@@ -23,6 +25,7 @@ export class ContractComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
+    public modalController: ModalController,
     private activatedRoute: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private contractService: ContractService,
@@ -41,6 +44,16 @@ export class ContractComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  public async makeNewOffer(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: NewOfferModalComponent,
+      componentProps: {
+        'user': this.user
+      }
+    });
+    return await modal.present();
   }
 
   public timeFromNow(time: Date) {
