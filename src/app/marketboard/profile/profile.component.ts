@@ -4,8 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
+import { Offer } from 'src/app/model/offer';
 import { User } from 'src/app/model/user';
 import { ContractService } from 'src/app/service/contract.service';
+import { OfferService } from 'src/app/service/offer.service';
 import { SettingsService } from 'src/app/service/settings.service';
 import { UserService } from 'src/app/service/user.service';
 import { timeFromNow } from 'src/app/shared/shared.utils';
@@ -25,12 +27,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
   isDarkMode: boolean = false;
   selected: string = 'contracts';
   contracts: Contract[];
+  offers: Offer[];
 
   constructor(
     public modalController: ModalController,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
     private contractService: ContractService,
+    private offerService: OfferService,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {}
@@ -42,6 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.isDarkMode = this.user.darkModeEnabled;
         this.isDarkMode ? this.settingsService.darkModeOn() : this.settingsService.darkModeOff();
         this.getContracts(this.user.id);
+        this.getOffers(this.user.id);
       }));
     
     this.subscriptions.push(
@@ -72,13 +77,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
     });
     return await modal.present();
-  }
-
-  public getContracts(id: number) {
-    this.subscriptions.push(
-      this.contractService.findContractByContracteeId(id).subscribe((contracts: Contract[]) => {
-        this.contracts = contracts;
-      }));
   }
 
   public logOut(): void {
@@ -115,5 +113,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
       )
     );
     this.settingsService.toggleDarkTheme();
+  }
+
+
+  private getContracts(id: number) {
+    this.subscriptions.push(
+      this.contractService.findContractByContracteeId(id).subscribe((contracts: Contract[]) => {
+        this.contracts = contracts;
+      }));
+  }
+
+  private getOffers(id: number) {
+    this.subscriptions.push(
+      this.offerService.findOfferByUserId(id).subscribe((offers: any[]) => {
+        console.log(offers);
+        this.offers = offers;
+      }));
   }
 }

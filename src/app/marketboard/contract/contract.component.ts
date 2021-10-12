@@ -7,6 +7,7 @@ import { Offer } from 'src/app/model/offer';
 import { User } from 'src/app/model/user';
 import { AuthenticationService } from 'src/app/service/authentication.service';
 import { ContractService } from 'src/app/service/contract.service';
+import { OfferService } from 'src/app/service/offer.service';
 import { UserService } from 'src/app/service/user.service';
 import { timeFromNow } from 'src/app/shared/shared.utils';
 import { NewOfferModalComponent } from '../new-offer-modal/new-offer-modal.component';
@@ -29,6 +30,7 @@ export class ContractComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private contractService: ContractService,
+    private offerService: OfferService,
     private userService: UserService
   ) { }
 
@@ -66,7 +68,14 @@ export class ContractComponent implements OnInit, OnDestroy {
       this.contractService.findContractById(id).subscribe((contract: Contract) => {
         this.contract = contract;
         this.contractUser = this.userService.findUserById(contract.contracteeId);
-        this.offers = contract.offers;
+        this.getOffers(this.contract.id);
+      }));
+  }
+
+  private getOffers(contractId: number) {
+    this.subscriptions.push(
+      this.offerService.findOfferByContractId(contractId).subscribe((offers: Offer[]) => {
+        this.offers = offers;
         this.getOffersUser();
       }));
   }

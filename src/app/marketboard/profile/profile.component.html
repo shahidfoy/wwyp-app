@@ -45,7 +45,7 @@
   <section *ngIf="selected === 'contracts'">
     <ion-card *ngFor="let contract of contracts">
       <ion-item>
-        <ion-icon name="reader-outline" slot="start"></ion-icon>
+        <ion-icon name="help-buoy-outline" slot="start"></ion-icon>
         <ion-label>{{ contract.subject }}</ion-label>
         <ion-button slot="end" [routerLink]="['/marketboard/contract']" [queryParams]="{ id: contract.id }">View</ion-button>
       </ion-item>
@@ -57,17 +57,17 @@
   </section>
 
   <section *ngIf="selected === 'offers'">
-    <!-- <h2>{{ user.username }}'s offers:</h2> -->
-
-    <ion-card>
+    <ion-card *ngFor="let offer of offers">
       <ion-item>
         <ion-icon name="reader-outline" slot="start"></ion-icon>
-        <ion-label>offer</ion-label>
-        <ion-button slot="end">View</ion-button>
+        <ion-label>{{ offer.amount }} | {{ offer.amountType }}</ion-label>
+        <ion-button slot="end" [routerLink]="['/marketboard/contract']" [queryParams]="{ id: offer.contract.id }">View Contract</ion-button>
       </ion-item>
     
       <ion-card-content>
-        This is content about one of your offers.
+        {{ offer.comment }}
+        <!-- <ion-button slot="end">Edit</ion-button> -->
+        <p class="pull-right">{{ timeFromNow(offer.createdDate) }}</p>
       </ion-card-content>
     </ion-card>
 
