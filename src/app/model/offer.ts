@@ -1,6 +1,8 @@
+import { Contract } from "./contract";
+
 export class Offer {
     public id: number;
-    public contractId: number;
+    public contract: Contract;
     public userId: number;
     public username: string;
     public userProfileImage: string;
@@ -13,7 +15,7 @@ export class Offer {
 
     constructor() {
         this.id = null;
-        this.contractId = null;
+        this.contract = null;
         this.userId = null;
         this.username = '';
         this.userProfileImage = '';

@@ -26,7 +26,6 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
   }
 
   public createNewContract(contract: Contract) {
-    console.log('new contact', contract);
     contract.contracteeId = this.user.id;
     
     this.subscriptions.push(
@@ -39,9 +38,7 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
         (errorResponse: HttpErrorResponse) => {
           // TODO:: NOTIFY USER OF ERROR
           console.log(errorResponse);
-        }
-      )
-    );
+        }));
   }
 
   public dismiss() {

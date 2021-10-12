@@ -1,6 +1,34 @@
 <app-header subtitle="New Offer" subtitleIcon="create-outline"></app-header>
 <ion-content>
+  <h2>New Offer</h2>
 
+  <form #newOfferForm="ngForm" (ngSubmit)="createNewOffer(newOfferForm.value)">
+    <ion-item>
+      <ion-label>Amount Type</ion-label>
+      <ion-input type="text" name="amountType" required ngModel #amountTypeInput="ngModel"></ion-input>
+    </ion-item>
 
-  <ion-button class="pull-right" size="small" color="light" (click)="dismiss()">Close</ion-button>
+    <ion-item>
+      <ion-label>Amount </ion-label>
+      <ion-input type="number" name="amount" required ngModel #amountInput="ngModel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Comment: </ion-label>
+      <ion-textarea type="text" name="comment" required ngModel #commentInput="ngModel"></ion-textarea>
+    </ion-item>
+
+    <ion-button
+      [disabled]="newOfferForm.invalid || isLoading"
+      type="submit"
+      name="button"
+      expand="block">
+      <span *ngIf="isLoading">Loading...</span>
+      <span *ngIf="!isLoading">Create</span>
+    </ion-button>
+  </form>
+
+  <div class="offer-button-group">
+    <ion-button class="pull-right" size="small" color="light" (click)="dismiss()">Close</ion-button>
+  </div>
 </ion-content>

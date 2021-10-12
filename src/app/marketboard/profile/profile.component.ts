@@ -85,6 +85,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.authenticationService.logOut();
     this.settingsService.darkModeOff();
     this.router.navigateByUrl('/login');
+    window.location.reload();
   }
 
   public segmentChanged(ev: any) {

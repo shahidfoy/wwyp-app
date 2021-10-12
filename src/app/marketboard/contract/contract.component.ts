@@ -50,7 +50,8 @@ export class ContractComponent implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: NewOfferModalComponent,
       componentProps: {
-        'user': this.user
+        'user': this.user,
+        'contract': this.contract
       }
     });
     return await modal.present();
