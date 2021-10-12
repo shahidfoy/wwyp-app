@@ -25,7 +25,9 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button expand="block" (click)="makeNewOffer()">Make An Offer</ion-button>
+  <ng-container *ngIf="contractUser | async as cUser">
+    <ion-button *ngIf="user.username !== cUser.username" expand="block" (click)="makeNewOffer()">Make An Offer</ion-button>
+  </ng-container>
   <section>
     <h2>Current Offers</h2>
     <p *ngIf="offers">Total: {{ offers.length }}</p>
