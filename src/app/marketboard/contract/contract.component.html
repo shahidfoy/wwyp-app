@@ -12,8 +12,16 @@
                 </ion-avatar>
                 <ion-label>{{ cUser.username }}</ion-label>
             </ion-chip>
+            <ion-chip *ngIf="!contract.seekingLowestOffer" color="success">
+              <ion-icon name="caret-up-circle-outline"></ion-icon>
+              <ion-label>seeking highest bid</ion-label>
+            </ion-chip>
+            <ion-chip *ngIf="contract.seekingLowestOffer" color="danger">
+              <ion-icon name="caret-down-circle-outline"></ion-icon>
+              <ion-label>seeking lowest bid</ion-label>
+            </ion-chip>
           </ng-container>
-          {{ contract.subject }}
+          <br> {{ contract.subject }}
         </h2>
       </ion-card-title>
     </ion-card-header>

@@ -62,7 +62,7 @@
   <section *ngIf="selected === 'offers'">
     <ion-card *ngFor="let offer of offers">
       <ion-item>
-        <ion-icon name="reader-outline" slot="start"></ion-icon>
+        <ion-icon name="document-text-outline" slot="start"></ion-icon>
         <ion-chip>
           <ion-label>{{ offer.amount }} | {{ offer.amountType }}</ion-label>
         </ion-chip>
@@ -70,7 +70,17 @@
       </ion-item>
     
       <ion-card-content>
-        <h4><b>Contract:</b> {{ offer.contract.subject }}</h4>
+        <h4>
+          <b>Contract:</b> {{ offer.contract.subject }}
+          <ion-chip *ngIf="!offer.contract.seekingLowestOffer" color="success">
+            <ion-icon name="caret-up-circle-outline"></ion-icon>
+            <ion-label>seeking highest bid</ion-label>
+          </ion-chip>
+          <ion-chip *ngIf="offer.contract.seekingLowestOffer" color="danger">
+            <ion-icon name="caret-down-circle-outline"></ion-icon>
+            <ion-label>seeking lowest bid</ion-label>
+          </ion-chip>
+        </h4>
         {{ offer.comment }}
         <!-- <ion-button slot="end">Edit</ion-button> -->
         <p class="pull-right">{{ timeFromNow(offer.createdDate) }}</p>
