@@ -38,6 +38,10 @@ export class OfferService {
     return this.http.get<Offer[]>(`${this.host}/offer/find/contract/${id}`);
   }
 
+  public findOfferByContractIdAndUserId(contractId: number, userId: number): Observable<Offer> {
+    return this.http.get<Offer>(`${this.host}/offer/find/contract/${contractId}/user/${userId}`);
+  }
+
   public findOfferByUserId(id: number): Observable<Offer[]> {
     return this.http.get<Offer[]>(`${this.host}/offer/find/user/${id}`);
   }

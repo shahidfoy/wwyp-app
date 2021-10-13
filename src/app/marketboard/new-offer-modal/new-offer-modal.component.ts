@@ -28,12 +28,30 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
   }
 
   public createNewOffer(offer: Offer) {
-
     offer.contract = this.contract;
     offer.userId = this.user.id;
     offer.amountType = offer.amountType.toUpperCase();
-    console.log(offer);
+    this.subscriptions.push(
+      this.offerService.findOfferByContractIdAndUserId(this.contract.id, this.user.id).subscribe((existingOffer: Offer) => {
+        if (existingOffer) {
+          this.updateOffer(existingOffer, offer);
+        } else {
+          this.addOffer(offer);
+        }
+      }));
+  }
 
+  public dismiss() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalController.dismiss({
+      'dismissed': true,
+    });
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+
+  private addOffer(offer: Offer) {
     this.subscriptions.push(
       this.offerService.addOffer(offer).subscribe(
         (response: Offer) => {
@@ -47,13 +65,20 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
         }));
   }
 
-  public dismiss() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss({
-      'dismissed': true,
-    });
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  private updateOffer(existingOffer: Offer, newOffer: Offer) {
+      existingOffer.amountType = newOffer.amountType;
+      existingOffer.amount = newOffer.amount;
+      existingOffer.comment = newOffer.comment;
+      this.subscriptions.push(
+        this.offerService.editOffer(existingOffer).subscribe(
+          (response: Offer) => {
+            console.log('offer updated successfully');
+            window.location.reload();
+            // TODO:: NOTIFY USER OF SUCCESS
+        },
+        (errorResponse: HttpErrorResponse) => {
+          // TODO:: NOTIFY USER OF ERROR
+          console.log(errorResponse);
+        }));
   }
-
 }

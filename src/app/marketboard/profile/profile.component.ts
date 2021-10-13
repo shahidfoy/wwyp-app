@@ -118,16 +118,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private getContracts(id: number) {
     this.subscriptions.push(
-      this.contractService.findContractByContracteeId(id).subscribe((contracts: Contract[]) => {
-        this.contracts = contracts;
-      }));
+      this.contractService.findContractByContracteeId(id).subscribe((contracts: Contract[]) => this.contracts = contracts));
   }
 
   private getOffers(id: number) {
     this.subscriptions.push(
-      this.offerService.findOfferByUserId(id).subscribe((offers: any[]) => {
-        console.log(offers);
-        this.offers = offers;
-      }));
+      this.offerService.findOfferByUserId(id).subscribe((offers: any[]) => this.offers = offers));
   }
 }

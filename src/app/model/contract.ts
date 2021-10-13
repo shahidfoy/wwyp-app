@@ -12,7 +12,6 @@ export class Contract {
     public contractImageUrls: string[];
     public acceptedOffer: Offer;
     public legalAgreement: string;
-    public offers: Offer[];
     public createdDate: Date;
     public lastUpdatedDate: Date;
 
@@ -27,7 +26,6 @@ export class Contract {
         this.contractImageUrls = [];
         this.acceptedOffer = null;
         this.legalAgreement = '';
-        this.offers = [];
         this.createdDate = null;
         this.lastUpdatedDate = null;
     }
