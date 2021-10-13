@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
+import { Offer } from 'src/app/model/offer';
 import { User } from 'src/app/model/user';
 import { ContractService } from 'src/app/service/contract.service';
+import { OfferService } from 'src/app/service/offer.service';
 import { UserService } from 'src/app/service/user.service';
 import { timeFromNow } from 'src/app/shared/shared.utils';
 
@@ -19,6 +21,7 @@ export class InquiriesComponent implements OnInit, OnDestroy {
 
   constructor(
     private contractService: ContractService,
+    private offerService: OfferService,
     private userService: UserService
   ) { }
 
@@ -27,6 +30,7 @@ export class InquiriesComponent implements OnInit, OnDestroy {
       this.contractService.getContracts().subscribe((contracts: Contract[]) => {
         this.contracts = contracts;
         this.getContractsUser();
+        this.getHighestOffers();
       })
      );
   }
@@ -52,6 +56,16 @@ export class InquiriesComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.userService.findUserById(contract.contracteeId).subscribe((user: User) => {
           this.usersMap.set(contract.contracteeId, user);
+        }));
+    });
+  }
+
+  private getHighestOffers() {
+    this.contracts.forEach((contract: Contract) => {
+      contract.highestOffer = new Offer();
+      this.subscriptions.push(
+        this.offerService.highestOfferByContractId(contract.id).subscribe((highestOffer: Offer) => {
+          contract.highestOffer = highestOffer;
         }));
     });
   }

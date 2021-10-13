@@ -14,6 +14,7 @@ export class Contract {
     public legalAgreement: string;
     public createdDate: Date;
     public lastUpdatedDate: Date;
+    public highestOffer: Offer;
 
     constructor() {
         this.id = null;
@@ -28,5 +29,6 @@ export class Contract {
         this.legalAgreement = '';
         this.createdDate = null;
         this.lastUpdatedDate = null;
+        this.highestOffer = new Offer();
     }
 }

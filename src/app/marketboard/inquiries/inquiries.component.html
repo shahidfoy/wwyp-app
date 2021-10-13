@@ -18,6 +18,7 @@
   
     <ion-card-content>
       <h2>{{ contract.subject }} <p>{{ contract.body }}</p></h2>
+      <p><b>Highest Offer:</b> {{ contract.highestOffer.amount }} | {{ contract.highestOffer.amountType }}</p>
       <p class="pull-right">{{ timeFromNow(contract.createdDate) }}</p>
     </ion-card-content>
   </ion-card>

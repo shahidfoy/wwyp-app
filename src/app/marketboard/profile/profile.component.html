@@ -51,6 +51,7 @@
       </ion-item>
       <ion-card-content>
         {{ contract.body }}
+        <p><b>Highest Offer:</b> {{ contract.highestOffer.amount }} | {{ contract.highestOffer.amountType }}</p>
         <p class="pull-right">{{ timeFromNow(contract.createdDate) }}</p>
       </ion-card-content>
     </ion-card>
@@ -65,7 +66,7 @@
       </ion-item>
     
       <ion-card-content>
-        <h4>{{ offer.contract.subject }}</h4>
+        <h4><b>Contract:</b> {{ offer.contract.subject }}</h4>
         {{ offer.comment }}
         <!-- <ion-button slot="end">Edit</ion-button> -->
         <p class="pull-right">{{ timeFromNow(offer.createdDate) }}</p>

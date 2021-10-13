@@ -118,7 +118,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private getContracts(id: number) {
     this.subscriptions.push(
-      this.contractService.findContractByContracteeId(id).subscribe((contracts: Contract[]) => this.contracts = contracts));
+      this.contractService.findContractByContracteeId(id).subscribe((contracts: Contract[]) => {
+        this.contracts = contracts;
+        this.getHighestOffers();
+      }));
+  }
+
+  private getHighestOffers() {
+    this.contracts.forEach((contract: Contract) => {
+      contract.highestOffer = new Offer();
+      this.subscriptions.push(
+        this.offerService.highestOfferByContractId(contract.id).subscribe((highestOffer: Offer) => {
+          contract.highestOffer = highestOffer;
+        }));
+    });
   }
 
   private getOffers(id: number) {
