@@ -25,7 +25,6 @@ export class InquiriesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(
       this.contractService.getContracts().subscribe((contracts: Contract[]) => {
-        console.log('contracts', contracts);
         this.contracts = contracts;
         this.getContractsUser();
       })

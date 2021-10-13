@@ -66,6 +66,7 @@ export class ContractComponent implements OnInit, OnDestroy {
   private getContract(id: number): void {
     this.subscriptions.push(
       this.contractService.findContractById(id).subscribe((contract: Contract) => {
+        console.log(contract);
         this.contract = contract;
         this.contractUser = this.userService.findUserById(contract.contracteeId);
         this.getOffers(this.contract.id);
