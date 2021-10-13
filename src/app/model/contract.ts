@@ -12,9 +12,9 @@ export class Contract {
     public contractImageUrls: string[];
     public acceptedOffer: Offer;
     public legalAgreement: string;
+    public seekingLowestOffer: boolean;
     public createdDate: Date;
     public lastUpdatedDate: Date;
-    public highestOffer: Offer;
 
     constructor() {
         this.id = null;
@@ -27,8 +27,8 @@ export class Contract {
         this.contractImageUrls = [];
         this.acceptedOffer = null;
         this.legalAgreement = '';
+        this.seekingLowestOffer = false;
         this.createdDate = null;
         this.lastUpdatedDate = null;
-        this.highestOffer = new Offer();
     }
 }

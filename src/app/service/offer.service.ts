@@ -53,4 +53,8 @@ export class OfferService {
   public highestOfferByContractId(contractId: number): Observable<Offer> {
     return this.http.get<Offer>(`${this.host}/offer/contract/highest-offer/${contractId}`);
   }
+
+  public lowestOfferByContractId(contractId: number): Observable<Offer> {
+    return this.http.get<Offer>(`${this.host}/offer/contract/lowest-offer/${contractId}`);
+  }
 }

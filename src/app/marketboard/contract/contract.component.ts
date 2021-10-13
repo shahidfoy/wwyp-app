@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
+import { OfferInterface } from 'src/app/model/interfaces/offer.interface';
 import { Offer } from 'src/app/model/offer';
 import { User } from 'src/app/model/user';
 import { AuthenticationService } from 'src/app/service/authentication.service';
@@ -82,7 +83,7 @@ export class ContractComponent implements OnInit, OnDestroy {
   }
 
   private getOffersUser() {
-    this.offers.forEach((offer: Offer) => {
+    this.offers.forEach((offer: OfferInterface) => {
       this.subscriptions.push(
         this.userService.findUserById(offer.userId).subscribe((user: User) => {
           offer.username = user.username;

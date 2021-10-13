@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
+import { ContractInterface } from 'src/app/model/interfaces/contract.interface';
 import { Offer } from 'src/app/model/offer';
 import { User } from 'src/app/model/user';
 import { ContractService } from 'src/app/service/contract.service';
@@ -30,7 +31,7 @@ export class InquiriesComponent implements OnInit, OnDestroy {
       this.contractService.getContracts().subscribe((contracts: Contract[]) => {
         this.contracts = contracts;
         this.getContractsUser();
-        this.getHighestOffers();
+        this.getBestOffers();
       })
      );
   }
@@ -51,6 +52,13 @@ export class InquiriesComponent implements OnInit, OnDestroy {
     return timeFromNow(time);
   }
 
+
+  private getBestOffers() {
+    this.contracts.forEach((contract: ContractInterface) => {
+      contract.seekingLowestOffer ? this.getLowestOffer(contract) : this.getHighestOffer(contract);
+    });
+  }
+
   private getContractsUser() {
     this.contracts.forEach((contract: Contract) => {
       this.subscriptions.push(
@@ -60,13 +68,19 @@ export class InquiriesComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getHighestOffers() {
-    this.contracts.forEach((contract: Contract) => {
-      contract.highestOffer = new Offer();
-      this.subscriptions.push(
-        this.offerService.highestOfferByContractId(contract.id).subscribe((highestOffer: Offer) => {
-          contract.highestOffer = highestOffer;
-        }));
-    });
+  private getHighestOffer(contract: ContractInterface) {
+    contract.bestOffer = new Offer();
+    this.subscriptions.push(
+      this.offerService.highestOfferByContractId(contract.id).subscribe((highestOffer: Offer) => {
+        contract.bestOffer = highestOffer;
+      }));
+  }
+
+  private getLowestOffer(contract: ContractInterface) {
+    contract.bestOffer = new Offer();
+    this.subscriptions.push(
+      this.offerService.lowestOfferByContractId(contract.id).subscribe((lowestOffer: Offer) => {
+        contract.bestOffer = lowestOffer;
+      }));
   }
 }

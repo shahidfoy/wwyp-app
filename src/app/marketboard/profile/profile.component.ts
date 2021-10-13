@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
+import { ContractInterface } from 'src/app/model/interfaces/contract.interface';
 import { Offer } from 'src/app/model/offer';
 import { User } from 'src/app/model/user';
 import { ContractService } from 'src/app/service/contract.service';
@@ -116,22 +117,34 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
 
+  private getBestOffers() {
+    this.contracts.forEach((contract: ContractInterface) => {
+      contract.seekingLowestOffer ? this.getLowestOffer(contract) : this.getHighestOffer(contract);
+    });
+  }
+  
   private getContracts(id: number) {
     this.subscriptions.push(
       this.contractService.findContractByContracteeId(id).subscribe((contracts: Contract[]) => {
         this.contracts = contracts;
-        this.getHighestOffers();
+        this.getBestOffers();
       }));
   }
 
-  private getHighestOffers() {
-    this.contracts.forEach((contract: Contract) => {
-      contract.highestOffer = new Offer();
-      this.subscriptions.push(
-        this.offerService.highestOfferByContractId(contract.id).subscribe((highestOffer: Offer) => {
-          contract.highestOffer = highestOffer;
-        }));
-    });
+  private getHighestOffer(contract: ContractInterface) {
+    contract.bestOffer = new Offer();
+    this.subscriptions.push(
+      this.offerService.highestOfferByContractId(contract.id).subscribe((highestOffer: Offer) => {
+        contract.bestOffer = highestOffer;
+      }));
+  }
+
+  private getLowestOffer(contract: ContractInterface) {
+    contract.bestOffer = new Offer();
+    this.subscriptions.push(
+      this.offerService.lowestOfferByContractId(contract.id).subscribe((lowestOffer: Offer) => {
+        contract.bestOffer = lowestOffer;
+      }));
   }
 
   private getOffers(id: number) {
