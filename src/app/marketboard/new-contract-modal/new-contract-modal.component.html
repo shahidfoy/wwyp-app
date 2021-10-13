@@ -28,8 +28,26 @@
     </ion-item>
 
     <ion-item>
+      <ion-list style="width: 100%">
+        <ion-radio-group value="biff">
+          <ion-list-header>
+            <ion-label>Seeking Bid Type?</ion-label>
+          </ion-list-header>
+          <ion-item style="display: flex">
+            <ion-label>Lowest</ion-label>
+            <ion-radio slot="start" value="Seek Lowest Bid"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Highest</ion-label>
+            <ion-radio slot="start" value="Seek Highest Bid"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+    </ion-item>
+
+    <ion-item>
       <ion-label>Legal Agreement </ion-label>
-      <ion-input type="text" name="legalAgreement" required ngModel #legalAgreementInput="ngModel"></ion-input>
+      <ion-input type="text" name="legalAgreement" ngModel #legalAgreementInput="ngModel"></ion-input>
     </ion-item>
 
     <ion-item>

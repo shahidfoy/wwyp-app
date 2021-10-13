@@ -51,7 +51,9 @@
       </ion-item>
       <ion-card-content>
         {{ contract.body }}
-        <p><b>Highest Offer:</b> {{ contract.highestOffer.amount }} | {{ contract.highestOffer.amountType }}</p>
+        <ion-chip>
+          <ion-label>Highest Offer: {{ contract.highestOffer.amount }} | {{ contract.highestOffer.amountType }}</ion-label>
+        </ion-chip>
         <p class="pull-right">{{ timeFromNow(contract.createdDate) }}</p>
       </ion-card-content>
     </ion-card>
@@ -61,7 +63,9 @@
     <ion-card *ngFor="let offer of offers">
       <ion-item>
         <ion-icon name="reader-outline" slot="start"></ion-icon>
-        <ion-label>{{ offer.amount }} | {{ offer.amountType }}</ion-label>
+        <ion-chip>
+          <ion-label>{{ offer.amount }} | {{ offer.amountType }}</ion-label>
+        </ion-chip>
         <ion-button slot="end" [routerLink]="['/marketboard/contract']" [queryParams]="{ id: offer.contract.id }">View Contract</ion-button>
       </ion-item>
     
