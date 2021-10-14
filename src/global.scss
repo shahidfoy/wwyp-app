@@ -34,6 +34,12 @@
     float: left;
 }
 
+.truncate {
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
 
 ///////////////////
 // DARK THEME

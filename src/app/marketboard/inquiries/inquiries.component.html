@@ -17,8 +17,8 @@
     </ion-item>
   
     <ion-card-content>
-      <h2>{{ contract.subject }}
-        <p>{{ contract.body }}</p>
+      <h2><span class="truncate">{{ contract.subject }}</span>
+        <p class="truncate">{{ contract.body }}</p>
       </h2>
       <ion-chip>
         <ion-label>Best Offer: {{ contract.bestOffer.amount }} | {{ contract.bestOffer.amountType }}</ion-label>

@@ -46,16 +46,16 @@
     <ion-card *ngFor="let contract of contracts">
       <ion-item>
         <ion-icon name="help-buoy-outline" slot="start"></ion-icon>
-        <ion-label>{{ contract.subject }}</ion-label>
+        <ion-label>{{ contract.subject }} <a (click)="editContract(contract)"><ion-icon name="create-outline"></ion-icon></a></ion-label>
         <ion-button slot="end" [routerLink]="['/marketboard/contract']" [queryParams]="{ id: contract.id }">View</ion-button>
       </ion-item>
       <ion-card-content>
-        {{ contract.body }}
-        <a (click)="editContract(contract)"><ion-icon name="create-outline"></ion-icon></a>
-        <br>
-        <ion-chip>
-          <ion-label>Best Offer: {{ contract.bestOffer.amount }} | {{ contract.bestOffer.amountType }}</ion-label>
-        </ion-chip>
+        <p>
+          <ion-chip>
+            <ion-label>Best Offer: {{ contract.bestOffer.amount }} | {{ contract.bestOffer.amountType }}</ion-label>
+          </ion-chip>
+        </p>
+        <p class="truncate">{{ contract.body }}</p>  
         <p class="pull-right">{{ timeFromNow(contract.lastUpdatedDate) }}</p>
       </ion-card-content>
     </ion-card>
@@ -73,7 +73,7 @@
     
       <ion-card-content>
         <h4>
-          <b>Contract:</b> {{ offer.contract.subject }}
+          <b>Contract:</b> <span class="truncate">{{ offer.contract.subject }}</span>
           <br>
           <ion-chip *ngIf="!offer.contract.seekingLowestOffer" color="success">
             <ion-icon name="caret-up-circle-outline"></ion-icon>
@@ -84,7 +84,7 @@
             <ion-label>seeking lowest bid</ion-label>
           </ion-chip>
         </h4>
-        {{ offer.comment }}
+        <p class="truncate">{{ offer.comment }}</p>
         <p class="pull-right">{{ timeFromNow(offer.lastUpdatedDate) }}</p>
       </ion-card-content>
     </ion-card>
