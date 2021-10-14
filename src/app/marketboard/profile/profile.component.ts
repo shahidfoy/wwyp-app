@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.isDarkMode ? this.settingsService.darkModeOn() : this.settingsService.darkModeOff();
         this.getContracts(this.user.id, this.contractsPage);
         this.getContractsTotalCount(this.user.id);
-        this.getOffers(this.user.id);
+        this.getOffers(this.user.id, this.offersPage);
       }));
     
     this.subscriptions.push(
@@ -109,8 +109,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public getContractsTotalCount(userId: number) {
     this.subscriptions.push(
       this.contractService.countContractByContracteeId(userId).subscribe((total: number) => {
-        console.log(total);
         this.totalContracts = total;
+      }));
+  }
+
+  public getOffers(id: number, page: number) {
+    this.subscriptions.push(
+      this.offerService.findOfferByUserId(id, page).subscribe((offers: any[]) => this.offers = offers));
+  }
+
+  public getOffersTotalCount(userId: number) {
+    this.subscriptions.push(
+      this.offerService.countOfferByUserId(userId).subscribe((total: number) => {
+        this.totalOffers = total;
       }));
   }
 
@@ -127,8 +138,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   public previousContractsPage() {
-    this.contractsPage--
+    this.contractsPage--;
     this.getContracts(this.user.id, this.contractsPage);
+  }
+
+  public nextOffersPage() {
+    this.offersPage++;
+    this.getOffers(this.user.id, this.offersPage);
+  }
+
+  public previousOffersPage() {
+    this.offersPage--;
+    this.getOffers(this.user.id, this.offersPage);
   }
 
   public segmentChanged(ev: any) {
@@ -181,10 +202,5 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.offerService.lowestOfferByContractId(contract.id).subscribe((lowestOffer: Offer) => {
         contract.bestOffer = lowestOffer;
       }));
-  }
-
-  private getOffers(id: number) {
-    this.subscriptions.push(
-      this.offerService.findOfferByUserId(id).subscribe((offers: any[]) => this.offers = offers));
   }
 }

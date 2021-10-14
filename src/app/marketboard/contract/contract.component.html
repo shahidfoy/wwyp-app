@@ -44,8 +44,8 @@
     <ion-button *ngIf="user.username !== cUser.username && contract.acceptedOffer === null" expand="block" (click)="makeNewOffer()">Make An Offer</ion-button>
   </ng-container>
   <section>
-    <h2>Current Offers</h2>
-    <p *ngIf="offers">Total: {{ offers.length }}</p>
+    <h2>Top Offers</h2>
+    <p *ngIf="offers">Total: {{ totalOffers }}</p>
   </section>
 
   <ion-card *ngFor="let offer of offers">

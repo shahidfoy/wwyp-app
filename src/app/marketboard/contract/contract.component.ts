@@ -25,6 +25,7 @@ export class ContractComponent implements OnInit, OnDestroy {
   contractUser: Observable<User>;
   contract: Contract = new Contract();
   offers: Offer[];
+  totalOffers: number = 0;
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -80,23 +81,27 @@ export class ContractComponent implements OnInit, OnDestroy {
   private getContract(id: number): void {
     this.subscriptions.push(
       this.contractService.findContractById(id).subscribe((contract: Contract) => {
-        console.log(contract);
         this.contract = contract;
         this.contractUser = this.userService.findUserById(contract.contracteeId);
         this.getOffers(this.contract.id);
+      }));
+    
+    this.subscriptions.push(
+      this.offerService.countOfferByContractId(id).subscribe((total: number) => {
+        this.totalOffers = total;
       }));
   }
 
   private getOffers(contractId: number) {
     if (this.contract.seekingLowestOffer) {
       this.subscriptions.push(
-        this.offerService.findOfferByContractIdOrderByAmountAsc(contractId).subscribe((offers: Offer[]) => {
+        this.offerService.findOfferByContractIdOrderByAmountAsc(contractId, 0).subscribe((offers: Offer[]) => {
           this.offers = offers;
           this.getOffersUser();
         }));
     } else {
       this.subscriptions.push(
-        this.offerService.findOfferByContractId(contractId).subscribe((offers: Offer[]) => {
+        this.offerService.findOfferByContractId(contractId, 0).subscribe((offers: Offer[]) => {
           this.offers = offers;
           this.getOffersUser();
         }));

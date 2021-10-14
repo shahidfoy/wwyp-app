@@ -3,7 +3,6 @@
 <ion-content>
 
   <ion-card>
-
     <ion-card-header>
       <ion-card-title>Hi {{ user.firstName }} {{ user.lastName }}</ion-card-title>
     </ion-card-header>
@@ -27,7 +26,6 @@
       <ion-button class="pull-right" color="light" size="small" (click)="editProfile()">Edit Profile</ion-button>
     </ion-card-content>
   </ion-card>
-  
   
   <ion-button expand="full" (click)="createNewContract()">
     <ion-icon slot="start" name="help-buoy-outline"></ion-icon> Create new inquiry
@@ -59,11 +57,11 @@
         <p class="pull-right">{{ timeFromNow(contract.lastUpdatedDate) }}</p>
       </ion-card-content>
     </ion-card>
-    <p style="display: flex; justify-content: center;">
-      <a style="margin: 8px;" *ngIf="contractsPage > 0" (click)="previousContractsPage()">previous page</a>
-      <span style="margin: 8px;"> || </span>
-      <a style="margin: 8px;" *ngIf="(contractsPage + 1) * defaultPageSize < totalContracts" (click)="nextContractsPage()">next page</a>
-    </p>
+    <div class="pagination-container">
+      <a class="pagination-item" *ngIf="contractsPage > 0" (click)="previousContractsPage()">previous page</a>
+      <span class="pagination-item"> || </span>
+      <a class="pagination-item" *ngIf="(contractsPage + 1) * defaultPageSize < totalContracts" (click)="nextContractsPage()">next page</a>
+    </div>
   </section>
 
   <section *ngIf="selected === 'offers'">
@@ -93,7 +91,11 @@
         <p class="pull-right">{{ timeFromNow(offer.lastUpdatedDate) }}</p>
       </ion-card-content>
     </ion-card>
-
+    <div class="pagination-container">
+      <a class="pagination-item" *ngIf="offersPage > 0" (click)="previousOffersPage()">previous page</a>
+      <span class="pagination-item"> || </span>
+      <a class="pagination-item" *ngIf="(offersPage + 1) * defaultPageSize < totalOffers" (click)="nextOffersPage()">next page</a>
+    </div>
   </section>
 
 </ion-content>

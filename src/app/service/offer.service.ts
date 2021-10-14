@@ -18,6 +18,14 @@ export class OfferService {
     return this.http.post<Offer>(`${this.host}/offer/add`, offer);
   }
 
+  public countOfferByContractId(contractId: number): Observable<number> {
+    return this.http.get<number>(`${this.host}/offer/count/contract/${contractId}`);
+  }
+
+  public countOfferByUserId(userId: number): Observable<number> {
+    return this.http.get<number>(`${this.host}/offer/count/user/${userId}`);
+  }
+
   public deleteOffer(id: number): Observable<CustomHttpResponse> {
     return this.http.delete<CustomHttpResponse>(`${this.host}/offer/delete/${id}`);
   }
@@ -34,20 +42,20 @@ export class OfferService {
     return this.http.get<Offer>(`${this.host}/offer/${id}`);
   }
 
-  public findOfferByContractId(id: number): Observable<Offer[]> {
-    return this.http.get<Offer[]>(`${this.host}/offer/find/contract/${id}`);
+  public findOfferByContractId(id: number, page: number): Observable<Offer[]> {
+    return this.http.get<Offer[]>(`${this.host}/offer/find/contract/${id}?page=${page}`);
   }
 
-  public findOfferByContractIdOrderByAmountAsc(id: number): Observable<Offer[]> {
-    return this.http.get<Offer[]>(`${this.host}/offer/find/contract/${id}/lowest`);
+  public findOfferByContractIdOrderByAmountAsc(id: number, page: number): Observable<Offer[]> {
+    return this.http.get<Offer[]>(`${this.host}/offer/find/contract/${id}/lowest?page=${page}`);
   }
 
   public findOfferByContractIdAndUserId(contractId: number, userId: number): Observable<Offer> {
     return this.http.get<Offer>(`${this.host}/offer/find/contract/${contractId}/user/${userId}`);
   }
 
-  public findOfferByUserId(id: number): Observable<Offer[]> {
-    return this.http.get<Offer[]>(`${this.host}/offer/find/user/${id}`);
+  public findOfferByUserId(id: number, page: number): Observable<Offer[]> {
+    return this.http.get<Offer[]>(`${this.host}/offer/find/user/${id}?page=${page}`);
   }
 
   public getOffers(): Observable<Offer[]> {
