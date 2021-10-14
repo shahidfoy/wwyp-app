@@ -67,17 +67,4 @@ export class ContractService {
   public getContracts(): Observable<Contract[]> {
     return this.http.get<Contract[]>(`${this.host}/contract/find/all`);
   }
-
-  // public addContractFormData(loggedInUserId: number, contract: Contract): FormData {
-  //   const formData: FormData = new FormData();
-  //   formData.append('contracteeId', loggedInUserId.toString());
-  //   formData.append('status', null);
-  //   formData.append('type', contract.type);
-  //   formData.append('subject', contract.subject);
-  //   formData.append('body', contract.body);
-  //   formData.append('contractImageUrls', contract.contractImageUrls);
-
-
-  //   return formData;
-  // }
 }
