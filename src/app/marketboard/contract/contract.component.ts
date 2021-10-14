@@ -88,11 +88,19 @@ export class ContractComponent implements OnInit, OnDestroy {
   }
 
   private getOffers(contractId: number) {
-    this.subscriptions.push(
-      this.offerService.findOfferByContractId(contractId).subscribe((offers: Offer[]) => {
-        this.offers = offers;
-        this.getOffersUser();
-      }));
+    if (this.contract.seekingLowestOffer) {
+      this.subscriptions.push(
+        this.offerService.findOfferByContractIdOrderByAmountAsc(contractId).subscribe((offers: Offer[]) => {
+          this.offers = offers;
+          this.getOffersUser();
+        }));
+    } else {
+      this.subscriptions.push(
+        this.offerService.findOfferByContractId(contractId).subscribe((offers: Offer[]) => {
+          this.offers = offers;
+          this.getOffersUser();
+        }));
+    }
   }
 
   private getOffersUser() {
