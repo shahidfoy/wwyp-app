@@ -7,7 +7,7 @@
     <ion-item>
       <ion-label>Type </ion-label>
       <!-- <ion-input type="text" name="type" required ngModel #typeInput="ngModel"></ion-input> -->
-      <ion-select name="type" required ngModel #typeInput="ngModel">
+      <ion-select name="type" required [(ngModel)]="typeInput">
         <ion-select-option value="sale">For Sale</ion-select-option>
         <ion-select-option value="maintenance">Maintenance</ion-select-option>
         <ion-select-option value="rental">Rental</ion-select-option>
@@ -19,17 +19,17 @@
 
     <ion-item>
       <ion-label>Subject </ion-label>
-      <ion-input type="text" name="subject" required ngModel #subjectInput="ngModel"></ion-input>
+      <ion-input type="text" name="subject" required [(ngModel)]="subjectInput"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label>Body </ion-label>
-      <ion-textarea type="text" name="body" rows="6" cols="20" required ngModel #bodyInput="ngModel"></ion-textarea>
+      <ion-textarea type="text" name="body" rows="6" cols="20" required [(ngModel)]="bodyInput"></ion-textarea>
     </ion-item>
 
     <ion-item>
       <ion-list>
-        <ion-radio-group name="seekingLowestOffer" value="bid-type" required ngModel #seekingLowestOfferInput="ngModel">
+        <ion-radio-group name="seekingLowestOffer" value="bid-type" required [(ngModel)]="seekingLowestOfferInput">
           <ion-list-header>
             <ion-label>Seeking Bid Type?</ion-label>
           </ion-list-header>
@@ -47,7 +47,7 @@
 
     <ion-item>
       <ion-label>Legal Agreement </ion-label>
-      <ion-input type="text" name="legalAgreement" ngModel #legalAgreementInput="ngModel"></ion-input>
+      <ion-input type="text" name="legalAgreement" [(ngModel)]="legalAgreementInput"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -61,7 +61,8 @@
       name="button"
       expand="block">
       <span *ngIf="isLoading">Loading...</span>
-      <span *ngIf="!isLoading">Create</span>
+      <span *ngIf="!isLoading && !contract.id">Create</span>
+      <span *ngIf="!isLoading && contract.id">Update</span>
     </ion-button>
   </form>
 

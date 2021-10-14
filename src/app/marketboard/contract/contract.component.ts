@@ -11,6 +11,7 @@ import { ContractService } from 'src/app/service/contract.service';
 import { OfferService } from 'src/app/service/offer.service';
 import { UserService } from 'src/app/service/user.service';
 import { timeFromNow } from 'src/app/shared/shared.utils';
+import { NewContractModalComponent } from '../new-contract-modal/new-contract-modal.component';
 import { NewOfferModalComponent } from '../new-offer-modal/new-offer-modal.component';
 
 @Component({
@@ -49,6 +50,17 @@ export class ContractComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  public async editContract(contract: Contract): Promise<void> {
+    const modal = await this.modalController.create({
+      component: NewContractModalComponent,
+      componentProps: {
+        'user': this.user,
+        'contract': contract
+      }
+    });
+    return await modal.present();
+  }
+
   public async makeNewOffer(): Promise<void> {
     const modal = await this.modalController.create({
       component: NewOfferModalComponent,
@@ -63,6 +75,7 @@ export class ContractComponent implements OnInit, OnDestroy {
   public timeFromNow(time: Date) {
     return timeFromNow(time);
   }
+
 
   private getContract(id: number): void {
     this.subscriptions.push(

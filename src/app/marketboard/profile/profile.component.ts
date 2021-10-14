@@ -64,7 +64,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: NewContractModalComponent,
       componentProps: {
-        'user': this.user
+        'user': this.user,
+        'contract': new Contract()
+      }
+    });
+    return await modal.present();
+  }
+
+  public async editContract(contract: Contract): Promise<void> {
+    const modal = await this.modalController.create({
+      component: NewContractModalComponent,
+      componentProps: {
+        'user': this.user,
+        'contract': contract
       }
     });
     return await modal.present();

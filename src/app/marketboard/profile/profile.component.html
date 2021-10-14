@@ -51,6 +51,7 @@
       </ion-item>
       <ion-card-content>
         {{ contract.body }}
+        <a (click)="editContract(contract)"><ion-icon name="create-outline"></ion-icon></a>
         <br>
         <ion-chip>
           <ion-label>Best Offer: {{ contract.bestOffer.amount }} | {{ contract.bestOffer.amountType }}</ion-label>

@@ -27,7 +27,14 @@
     </ion-card-header>
 
     <ion-card-content>
-      <p>{{ contract.body }}</p>
+      <p>
+        {{ contract.body }}
+        <ng-container *ngIf="contractUser | async as cUser">
+          <a *ngIf="cUser.id === user.id" (click)="editContract(contract)">
+            <ion-icon name="create-outline"></ion-icon>
+          </a>
+        </ng-container>
+      </p>
       <p>Leagal Agreement: <br> {{ contract.legalAgreement }}</p>
       <p class="pull-right">{{ timeFromNow(contract.createdDate) }}</p>
     </ion-card-content>
