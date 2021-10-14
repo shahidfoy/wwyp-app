@@ -27,7 +27,6 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
 
   public createNewContract(contract: Contract) {
     contract.contracteeId = this.user.id;
-    
     this.subscriptions.push(
       this.contractService.addContract(contract).subscribe(
         (response: Contract) => {

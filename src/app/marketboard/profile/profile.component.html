@@ -51,6 +51,7 @@
       </ion-item>
       <ion-card-content>
         {{ contract.body }}
+        <br>
         <ion-chip>
           <ion-label>Best Offer: {{ contract.bestOffer.amount }} | {{ contract.bestOffer.amountType }}</ion-label>
         </ion-chip>
@@ -72,6 +73,7 @@
       <ion-card-content>
         <h4>
           <b>Contract:</b> {{ offer.contract.subject }}
+          <br>
           <ion-chip *ngIf="!offer.contract.seekingLowestOffer" color="success">
             <ion-icon name="caret-up-circle-outline"></ion-icon>
             <ion-label>seeking highest bid</ion-label>
