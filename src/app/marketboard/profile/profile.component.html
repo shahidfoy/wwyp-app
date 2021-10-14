@@ -56,7 +56,7 @@
         <ion-chip>
           <ion-label>Best Offer: {{ contract.bestOffer.amount }} | {{ contract.bestOffer.amountType }}</ion-label>
         </ion-chip>
-        <p class="pull-right">{{ timeFromNow(contract.createdDate) }}</p>
+        <p class="pull-right">{{ timeFromNow(contract.lastUpdatedDate) }}</p>
       </ion-card-content>
     </ion-card>
   </section>
@@ -85,8 +85,7 @@
           </ion-chip>
         </h4>
         {{ offer.comment }}
-        <!-- <ion-button slot="end">Edit</ion-button> -->
-        <p class="pull-right">{{ timeFromNow(offer.createdDate) }}</p>
+        <p class="pull-right">{{ timeFromNow(offer.lastUpdatedDate) }}</p>
       </ion-card-content>
     </ion-card>
 
