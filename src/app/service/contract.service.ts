@@ -28,6 +28,14 @@ export class ContractService {
     return this.http.get<number>(`${this.host}/contract/count/contractee/${contracteeId}`);
   }
 
+  public countContractByContractorId(contractorId: number): Observable<number> {
+    return this.http.get<number>(`${this.host}/contract/count/contractor/${contractorId}`);
+  }
+
+  public countContractByType(type: string): Observable<string> {
+    return this.http.get<string>(`${this.host}/contract/count/type/${type}`);
+  }
+
   public deleteContract(id: number): Observable<CustomHttpResponse> {
     return this.http.delete<CustomHttpResponse>(`${this.host}/contract/delete/${id}`);
   }
@@ -52,8 +60,8 @@ export class ContractService {
     return this.http.post<Contract[]>(`${this.host}/contract/find/contractee?page=${page}`, contracteeId);
   }
 
-  public findContractByContractorId(contractorId: number): Observable<Contract[]> {
-    return this.http.post<Contract[]>(`${this.host}/contract/find/contractor`, contractorId);
+  public findContractByContractorId(contractorId: number, page: number): Observable<Contract[]> {
+    return this.http.post<Contract[]>(`${this.host}/contract/find/contractor?page=${page}`, contractorId);
   }
 
   public getContracts(): Observable<Contract[]> {
