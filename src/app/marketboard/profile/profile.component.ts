@@ -29,6 +29,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   selected: string = 'contracts';
   contracts: Contract[];
   offers: Offer[];
+  contractsPage: number = 0;
+  offersPage: number = 0;
+  defaultPageSize: number = 20;
+  totalContracts: number = 0;
+  totalOffers: number = 0;
 
   constructor(
     public modalController: ModalController,
@@ -46,7 +51,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.user = this.authenticationService.getUserFromLocalCache();
         this.isDarkMode = this.user.darkModeEnabled;
         this.isDarkMode ? this.settingsService.darkModeOn() : this.settingsService.darkModeOff();
-        this.getContracts(this.user.id);
+        this.getContracts(this.user.id, this.contractsPage);
+        this.getContractsTotalCount(this.user.id);
         this.getOffers(this.user.id);
       }));
     
@@ -92,11 +98,37 @@ export class ProfileComponent implements OnInit, OnDestroy {
     return await modal.present();
   }
 
+  public getContracts(userId: number, page: number) {
+    this.subscriptions.push(
+      this.contractService.findContractByContracteeId(userId, page).subscribe((contracts: Contract[]) => {
+        this.contracts = contracts;
+        this.getBestOffers();
+      }));
+  }
+
+  public getContractsTotalCount(userId: number) {
+    this.subscriptions.push(
+      this.contractService.countContractByContracteeId(userId).subscribe((total: number) => {
+        console.log(total);
+        this.totalContracts = total;
+      }));
+  }
+
   public logOut(): void {
     this.authenticationService.logOut();
     this.settingsService.darkModeOff();
     this.router.navigateByUrl('/login');
     window.location.reload();
+  }
+
+  public nextContractsPage() {
+    this.contractsPage++;
+    this.getContracts(this.user.id, this.contractsPage);
+  }
+
+  public previousContractsPage() {
+    this.contractsPage--
+    this.getContracts(this.user.id, this.contractsPage);
   }
 
   public segmentChanged(ev: any) {
@@ -133,14 +165,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.contracts.forEach((contract: ContractInterface) => {
       contract.seekingLowestOffer ? this.getLowestOffer(contract) : this.getHighestOffer(contract);
     });
-  }
-  
-  private getContracts(id: number) {
-    this.subscriptions.push(
-      this.contractService.findContractByContracteeId(id).subscribe((contracts: Contract[]) => {
-        this.contracts = contracts;
-        this.getBestOffers();
-      }));
   }
 
   private getHighestOffer(contract: ContractInterface) {

@@ -59,6 +59,11 @@
         <p class="pull-right">{{ timeFromNow(contract.lastUpdatedDate) }}</p>
       </ion-card-content>
     </ion-card>
+    <p style="display: flex; justify-content: center;">
+      <a style="margin: 8px;" *ngIf="contractsPage > 0" (click)="previousContractsPage()">previous page</a>
+      <span style="margin: 8px;"> || </span>
+      <a style="margin: 8px;" *ngIf="(contractsPage + 1) * defaultPageSize < totalContracts" (click)="nextContractsPage()">next page</a>
+    </p>
   </section>
 
   <section *ngIf="selected === 'offers'">
