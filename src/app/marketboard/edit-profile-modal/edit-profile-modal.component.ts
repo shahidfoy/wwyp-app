@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/model/user';
