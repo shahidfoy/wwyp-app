@@ -59,7 +59,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.offerService.addOffer(offer).subscribe(
         (response: Offer) => {
-          this.sendNotification(response, `${this.user.username} sent you a new offer ${response.amount} | ${response.amountType}`);
+          this.sendNotification(response, `${this.user.username} sent you a new offer for ${response.amount} | ${response.amountType}`);
           this.presentToast('New offer created successfully');
           setTimeout(() => window.location.reload(), 2000);
         },
@@ -73,7 +73,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
     const toast = await this.toastController.create({
       position: 'bottom',
       message: message,
-      duration: 2000
+      duration: 1000
     });
     toast.present();
   }
@@ -95,7 +95,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.offerService.editOffer(existingOffer).subscribe(
           (response: Offer) => {
-            this.sendNotification(response, `${this.user.username} updated their offer ${response.amount} | ${response.amountType}`);
+            this.sendNotification(response, `${this.user.username} updated their offer to ${response.amount} | ${response.amountType}`);
             this.presentToast('Offer updated successfully');
             setTimeout(() => window.location.reload(), 2000);
         },

@@ -30,11 +30,11 @@ export class NotificationService {
     return this.http.delete<CustomHttpResponse>(`${this.host}/notification/delete/${id}`);
   }
 
-  public findNotificationByUserId(userId: number): Observable<Notification[]> {
-    return this.http.get<Notification[]>(`${this.host}/notification/find/user/${userId}`);
+  public findNotificationByUserId(userId: number, page: number): Observable<Notification[]> {
+    return this.http.get<Notification[]>(`${this.host}/notification/find/user/${userId}?page=${page}`);
   }
 
   public markNotificationsAsRead(notificationIds: number[]): Observable<CustomHttpResponse> {
-    return this.http.post<CustomHttpResponse>(`${this.host}/notifications/mark/read`, notificationIds);
+    return this.http.post<CustomHttpResponse>(`${this.host}/notification/mark/read`, notificationIds);
   }
 }

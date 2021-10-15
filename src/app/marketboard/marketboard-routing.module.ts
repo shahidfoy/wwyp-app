@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../guard/auth.guard';
-import { ChatComponent } from './chat/chat.component';
 import { ContractComponent } from './contract/contract.component';
 import { InquiriesComponent } from './inquiries/inquiries.component';
 import { MarketboardComponent } from './marketboard.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
@@ -14,8 +14,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
         { path: '', redirectTo: 'profile', pathMatch: 'full' },
-        { path: 'chat', component: ChatComponent },
         { path: 'contract', component: ContractComponent },
+        { path: 'notifications', component: NotificationsComponent },
         { path: 'profile', component: ProfileComponent },
         { path: 'inquiries', component: InquiriesComponent }
     ]
