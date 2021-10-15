@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/model/user';
 import { AuthenticationService } from 'src/app/service/authentication.service';
@@ -24,6 +24,7 @@ export class EditProfileModalComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(public modalController: ModalController,
+              public toastController: ToastController,
               private authenticationService: AuthenticationService,
               private settingsService: SettingsService,
               private userService: UserService) { }
@@ -63,10 +64,8 @@ export class EditProfileModalComponent implements OnInit, OnDestroy {
         (response: User) => {
           this.authenticationService.addUserToLocalCache(response);
           this.user = response;
-          // TODO:: NOTIFY USER OF SUCCESS
         },
         (errorResponse: HttpErrorResponse) => {
-          // TODO:: NOTIFIY USER OF ERROR
           console.log(errorResponse);
         }
       )
@@ -82,14 +81,23 @@ export class EditProfileModalComponent implements OnInit, OnDestroy {
         (response: User) => {
           this.authenticationService.addUserToLocalCache(response);
           this.user = response;
-          window.location.reload();
-          // TODO:: NOTIFY USER OF SUCCESS
+          this.presentToast('Updated profile successfully');
+          setTimeout(() => window.location.reload(), 2000);
         },
         (errorResponse: HttpErrorResponse) => {
-          // TODO:: NOTIFIY USER OF ERROR
           console.log(errorResponse);
+          this.presentToast('Error updating profile');
         }
       )
     );
+  }
+
+  private async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      position: 'bottom',
+      message: message,
+      duration: 2000
+    });
+    toast.present();
   }
 }

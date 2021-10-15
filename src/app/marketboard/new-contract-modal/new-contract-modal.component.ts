@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
 import { User } from 'src/app/model/user';
@@ -25,6 +25,7 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(public modalController: ModalController,
+              public toastController: ToastController,
               private contractService: ContractService) { }
 
   ngOnInit() {
@@ -62,14 +63,22 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.contractService.addContract(contract).subscribe(
         (response: Contract) => {
-          console.log('new contract added successfully');
-          window.location.reload();
-          // TODO:: NOTIFY USER OF SUCCESS
+          this.presentToast('New contract created successfully');
+          setTimeout(() => window.location.reload(), 2000);
         },
         (errorResponse: HttpErrorResponse) => {
-          // TODO:: NOTIFY USER OF ERROR
           console.log(errorResponse);
+          this.presentToast('Error creating new contract');
         }));
+  }
+
+  private async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      position: 'bottom',
+      message: message,
+      duration: 2000
+    });
+    toast.present();
   }
 
   private updateContract(existingContract: Contract, newContract: Contract) {
@@ -81,13 +90,12 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.contractService.editContract(existingContract).subscribe(
         (response: Contract) => {
-          console.log('contract updated successfully');
-          window.location.reload();
-          // TODO:: NOTIFY USER OF SUCCESS
+          this.presentToast('Contract updated successfully');
+          setTimeout(() => window.location.reload(), 2000);
       },
       (errorResponse: HttpErrorResponse) => {
-        // TODO:: NOTIFY USER OF ERROR
         console.log(errorResponse);
+        this.presentToast('Error updating contract');
       }));
   }
 }

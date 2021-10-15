@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { HeaderType } from '../enum/header-type.enum';
 import { User } from '../model/user';
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public isLoading: boolean;
   private subscriptions: Subscription[] = [];
 
-  constructor(private router: Router,
+  constructor(public toastController: ToastController,
+              private router: Router,
               private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
@@ -32,15 +34,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  // TODO:: IMPLEMENT FORM VALIDATION
+
   public onRegister(form: NgForm): void {
     const user: User = form.value;
     this.isLoading = true;
     this.subscriptions.push(
       this.authenticationService.register(user).subscribe(
         (response: HttpResponse<User>) => {
-          console.log('RESPONSE HEADERS', response.headers.getAll);
+          // console.log('RESPONSE HEADERS', response.headers.getAll);
           const token = response.headers.get(HeaderType.JWT_TOKEN);
-          console.log('TOKEN', token);
           this.authenticationService.saveToken(token);
           this.authenticationService.addUserToLocalCache(response.body);
           this.router.navigateByUrl('/marketboard/profile');
@@ -48,11 +51,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
           form.resetForm();
         },
         (errorResponse: HttpErrorResponse) => {
-          // TODO:: NOTIFIY USER OF ERROR
           console.log('Error: ', errorResponse);
+          this.presentToast('Error registering in please try again later');
           this.isLoading = false;
         }
       )
     )
+  }
+
+  private async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      position: 'bottom',
+      message: message,
+      duration: 2000
+    });
+    toast.present();
   }
 }

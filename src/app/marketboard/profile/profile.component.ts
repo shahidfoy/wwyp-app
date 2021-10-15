@@ -170,13 +170,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         (response: User) => {
           this.authenticationService.addUserToLocalCache(response);
           this.user = response;
-          // TODO:: NOTIFY USER OF SUCCESS
         },
-        (errorResponse: HttpErrorResponse) => {
-          // TODO:: NOTIFIY USER OF ERROR
-          console.log(errorResponse);
-        }
-      )
+        (errorResponse: HttpErrorResponse) => console.log(errorResponse))
     );
     this.settingsService.toggleDarkTheme();
   }

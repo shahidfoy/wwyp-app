@@ -1,7 +1,6 @@
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CustomHttpResponse } from '../model/custom-http-response';
 import { User } from '../model/user';
@@ -63,20 +62,6 @@ export class UserService {
   public updateUser(formData: FormData): Observable<User> {
     return this.http.post<User>(`${this.host}/user/update`, formData);
   }
-  
-
-  // TODO:: MIGHT REMOVE THESE BELOW
-
-  // public addUsersToLocalCache(users: User[]): void {
-  //   localStorage.setItem('users', JSON.stringify(users));
-  // }
-
-  // public getUsersFromLocalCache(): User[] {
-  //   if (localStorage.getItem('users')) {
-  //       return JSON.parse(localStorage.getItem('users'));
-  //   }
-  //   return null;
-  // }
 
   public editUserFormData(loggedInUserEmail: string, user: User): FormData {
     const formData: FormData = new FormData();

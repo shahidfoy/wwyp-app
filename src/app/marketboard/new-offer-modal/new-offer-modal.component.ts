@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
 import { Notification } from 'src/app/model/notification';
@@ -21,6 +21,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(public modalController: ModalController,
+              public toastController: ToastController,
               private notificationService: NotificationService,
               private offerService: OfferService) { }
 
@@ -58,15 +59,23 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.offerService.addOffer(offer).subscribe(
         (response: Offer) => {
-          console.log('new offer added successfully');
-          // window.location.reload();
           this.sendNotification(response, `${this.user.username} sent you a new offer ${response.amount} | ${response.amountType}`);
-          // TODO:: NOTIFY USER OF SUCCESS
+          this.presentToast('New offer created successfully');
+          setTimeout(() => window.location.reload(), 2000);
         },
         (errorResponse: HttpErrorResponse) => {
-          // TODO:: NOTIFY USER OF ERROR
           console.log(errorResponse);
+          this.presentToast('Error creating new offer');
         }));
+  }
+
+  private async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      position: 'bottom',
+      message: message,
+      duration: 2000
+    });
+    toast.present();
   }
 
   private sendNotification(offer: Offer, message: string) {
@@ -76,9 +85,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
     newNotification.offer = offer;
     newNotification.message = message;
     this.subscriptions.push(
-      this.notificationService.addNotification(newNotification).subscribe((notification: Notification) => {
-        window.location.reload();
-      }));
+      this.notificationService.addNotification(newNotification).subscribe((notification: Notification) => {}));
   }
 
   private updateOffer(existingOffer: Offer, newOffer: Offer) {
@@ -88,14 +95,13 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.offerService.editOffer(existingOffer).subscribe(
           (response: Offer) => {
-            console.log('offer updated successfully');
-            // window.location.reload();
             this.sendNotification(response, `${this.user.username} updated their offer ${response.amount} | ${response.amountType}`);
-            // TODO:: NOTIFY USER OF SUCCESS
+            this.presentToast('Offer updated successfully');
+            setTimeout(() => window.location.reload(), 2000);
         },
         (errorResponse: HttpErrorResponse) => {
-          // TODO:: NOTIFY USER OF ERROR
           console.log(errorResponse);
+          this.presentToast('Error updating offer');
         }));
   }
 }
