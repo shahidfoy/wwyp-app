@@ -1,12 +1,16 @@
 <app-header subtitle="Notifications" subtitleIcon="chatbubbles-outline"></app-header>
 <ion-content>
 
+  <div *ngIf="0 >= notifications.length" class="no-notifications">
+    <p>No new notifications yet..</p>
+  </div>
+
   <ion-list *ngFor="let notification of notifications">
     <ion-item-sliding>
       <ion-item (click)="markRead(notification.id)"
         [routerLink]="['/marketboard/contract']"
         [queryParams]="{ id: notification.contract.id }">
-        <ion-avatar style="margin-right: 21px;">
+        <ion-avatar class="profile-image">
           <img [src]="getUserProfileImage(notification.offer.userId)">
         </ion-avatar>
         <ion-label>
@@ -15,10 +19,7 @@
             {{ notification.contract.subject }}
           </h4>
           <p>{{ notification.message }}</p>
-          <p>
-            {{ timeFromNow(notification.createdDate) }}
-            <!-- <a (click)="delete(notification.id)"><ion-icon name="trash-outline" color="dark"></ion-icon></a> -->
-          </p>
+          <p>{{ timeFromNow(notification.createdDate) }}</p>
         </ion-label>
       </ion-item>
 

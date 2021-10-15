@@ -40,6 +40,10 @@
   </ion-segment>
 
   <section *ngIf="selected === 'contracts'">
+    <div *ngIf="0 >= contracts.length">
+      <p>No contracts yet. Why not make a contract? <a (click)="createNewContract()">create new inquiry</a></p>
+    </div>
+
     <ion-card *ngFor="let contract of contracts">
       <ion-item>
         <ion-icon name="help-buoy-outline" slot="start"></ion-icon>
@@ -64,6 +68,10 @@
   </section>
 
   <section *ngIf="selected === 'offers'">
+    <div *ngIf="0 >= offers.length">
+      <p>No offers yet. Why not make an offer? <a [routerLink]="['/marketboard/inquires']">view inquires</a></p>
+    </div>
+
     <ion-card *ngFor="let offer of offers">
       <ion-item>
         <ion-icon name="document-text-outline" slot="start"></ion-icon>

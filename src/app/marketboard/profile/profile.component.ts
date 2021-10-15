@@ -27,8 +27,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   isDarkMode: boolean = false;
   selected: string = 'contracts';
-  contracts: Contract[];
-  offers: Offer[];
+  contracts: Contract[] = [];
+  offers: Offer[] = [];
   contractsPage: number = 0;
   offersPage: number = 0;
   defaultPageSize: number = 20;
