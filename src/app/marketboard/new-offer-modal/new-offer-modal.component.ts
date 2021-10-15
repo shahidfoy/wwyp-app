@@ -3,8 +3,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
+import { Notification } from 'src/app/model/notification';
 import { Offer } from 'src/app/model/offer';
 import { User } from 'src/app/model/user';
+import { NotificationService } from 'src/app/service/notification.service';
 import { OfferService } from 'src/app/service/offer.service';
 
 @Component({
@@ -19,6 +21,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(public modalController: ModalController,
+              private notificationService: NotificationService,
               private offerService: OfferService) { }
 
   ngOnInit() {}
@@ -56,13 +59,26 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
       this.offerService.addOffer(offer).subscribe(
         (response: Offer) => {
           console.log('new offer added successfully');
-          window.location.reload();
+          // window.location.reload();
+          this.sendNotification(response, `${this.user.username} sent you a new offer ${response.amount} | ${response.amountType}`);
           // TODO:: NOTIFY USER OF SUCCESS
         },
         (errorResponse: HttpErrorResponse) => {
           // TODO:: NOTIFY USER OF ERROR
           console.log(errorResponse);
         }));
+  }
+
+  private sendNotification(offer: Offer, message: string) {
+    const newNotification: Notification = new Notification();
+    newNotification.userId = this.contract.contracteeId;
+    newNotification.contract = this.contract;
+    newNotification.offer = offer;
+    newNotification.message = message;
+    this.subscriptions.push(
+      this.notificationService.addNotification(newNotification).subscribe((notification: Notification) => {
+        window.location.reload();
+      }));
   }
 
   private updateOffer(existingOffer: Offer, newOffer: Offer) {
@@ -73,7 +89,8 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
         this.offerService.editOffer(existingOffer).subscribe(
           (response: Offer) => {
             console.log('offer updated successfully');
-            window.location.reload();
+            // window.location.reload();
+            this.sendNotification(response, `${this.user.username} updated their offer ${response.amount} | ${response.amountType}`);
             // TODO:: NOTIFY USER OF SUCCESS
         },
         (errorResponse: HttpErrorResponse) => {
