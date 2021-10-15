@@ -1,23 +1,14 @@
 <app-header subtitle="Notifications" subtitleIcon="chatbubbles-outline"></app-header>
 <ion-content>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="light">
-      <ion-icon name="create-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button><ion-icon name="trash-outline"></ion-icon></ion-fab-button>
-      <ion-fab-button><ion-icon name="checkmark-done-outline"></ion-icon></ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-
   <ion-list *ngFor="let notification of notifications">
     <ion-item-sliding>
-      <ion-item>
-          <ion-avatar style="margin-right: 21px;">
-            <img [src]="getUserProfileImage(notification.offer.userId)">
-            <!-- <img src="https://robohash.org/shahidfoy?set=set2"> -->
-          </ion-avatar>
+      <ion-item (click)="markRead(notification.id)"
+        [routerLink]="['/marketboard/contract']"
+        [queryParams]="{ id: notification.contract.id }">
+        <ion-avatar style="margin-right: 21px;">
+          <img [src]="getUserProfileImage(notification.offer.userId)">
+        </ion-avatar>
         <ion-label>
           <h4>
             <span *ngIf="!notification.markedRead">✉️</span>
@@ -26,14 +17,9 @@
           <p>{{ notification.message }}</p>
           <p>
             {{ timeFromNow(notification.createdDate) }}
-            <a><ion-icon name="trash-outline" color="dark"></ion-icon></a>
+            <!-- <a (click)="delete(notification.id)"><ion-icon name="trash-outline" color="dark"></ion-icon></a> -->
           </p>
         </ion-label>
-        <ion-button slot="end"
-          (click)="markRead(notification.id)"
-          [routerLink]="['/marketboard/contract']"
-          [queryParams]="{ id: notification.contract.id }">View
-        </ion-button>
       </ion-item>
 
       <ion-item-options side="end">
@@ -41,4 +27,15 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="light">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="deleteAllNotifications()"><ion-icon name="trash-outline"></ion-icon></ion-fab-button>
+      <ion-fab-button (click)="markReadAllNotifications()"><ion-icon name="checkmark-done-outline"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
 </ion-content>

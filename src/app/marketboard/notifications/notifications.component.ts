@@ -34,20 +34,35 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   }
 
 
+  public deleteAllNotifications() {
+    this.notifications.forEach((notification: Notification) => {
+      this.delete(notification.id);
+    });
+  }
+
   public getUserProfileImage(userId: number) {
     return this.usersMap.get(userId) ? this.usersMap.get(userId).profileImageUrl : undefined;
   }
 
   public markRead(notificationId: number) {
-    this.subscriptions.push(
-      this.notificationService.markNotificationsAsRead([notificationId]).subscribe(() => {
-        this.getNotifications();
-        window.location.reload();
-      }));
+    this.markNotifications([notificationId]);
+  }
+
+  markReadAllNotifications() {
+    let notificationIds: number[] = this.notifications.map(n => n.id);
+    this.markNotifications(notificationIds);
   }
 
   public timeFromNow(time: Date) {
     return timeFromNow(time);
+  }
+
+
+  private delete(notificationId: number) {
+    this.subscriptions.push(
+      this.notificationService.deleteNotification(notificationId).subscribe(() => {
+        this.getNotifications();
+      }));
   }
 
   private getNotifications() {
@@ -65,5 +80,13 @@ export class NotificationsComponent implements OnInit, OnDestroy {
           this.usersMap.set(notification.offer.userId, user);
         }));
     });
+  }
+
+  private markNotifications(notificationIds: number[]) {
+    this.subscriptions.push(
+      this.notificationService.markNotificationsAsRead(notificationIds).subscribe(() => {
+        this.getNotifications();
+        window.location.reload();
+      }));
   }
 }
