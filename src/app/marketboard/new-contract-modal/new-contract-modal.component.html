@@ -15,9 +15,9 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Tags</ion-label>
+    <ion-item *ngIf="subcategories.length > 0">
       <p>
+        <span>Select Tag: </span>
         <ion-chip
           *ngFor="let subcategory of subcategories"
           (click)="isSelected(subcategory)"

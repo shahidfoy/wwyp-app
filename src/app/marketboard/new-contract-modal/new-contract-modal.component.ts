@@ -83,6 +83,7 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
   }
 
   public isSelected(subcategory: SubCategoryInterface) {
+    this.subcategories.forEach((subcategory: SubCategoryInterface) => subcategory.isSelected = false);
     subcategory.isSelected = !subcategory.isSelected;
   }
 
