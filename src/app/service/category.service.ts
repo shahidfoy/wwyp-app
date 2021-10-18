@@ -26,6 +26,6 @@ export class CategoryService {
   }
 
   public getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.http}/category/find/all`);
+    return this.http.get<Category[]>(`${this.host}/category/find/all`);
   }
 }

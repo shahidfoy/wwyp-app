@@ -1,9 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Category } from 'src/app/model/category';
 import { Contract } from 'src/app/model/contract';
+import { SubCategoryInterface } from 'src/app/model/interfaces/subcategoryinterface';
+import { SubCategory } from 'src/app/model/sub-category';
 import { User } from 'src/app/model/user';
+import { CategoryService } from 'src/app/service/category.service';
 import { ContractService } from 'src/app/service/contract.service';
 
 @Component({
@@ -21,11 +25,16 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
   bodyInput: string;
   seekingLowestOfferInput: string;
   legalAgreementInput: string;
+  categories: Category[] = [];
+  subcategories: SubCategoryInterface[] = [];
+
+  changeCategory: BehaviorSubject<Category> = new BehaviorSubject(undefined);
 
   subscriptions: Subscription[] = [];
 
   constructor(public modalController: ModalController,
               public toastController: ToastController,
+              private categoryService: CategoryService,
               private contractService: ContractService) { }
 
   ngOnInit() {
@@ -34,10 +43,25 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
     this.bodyInput = this.contract.body;
     this.seekingLowestOfferInput = this.contract.seekingLowestOffer.toString();
     this.legalAgreementInput = this.contract.legalAgreement;
+    this.getCategories();
   } 
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  public changeSubCategory() {
+    this.subcategories = [];
+    let categoryName = this.typeInput;
+    this.categories.forEach((category: Category) => {
+      if (category.name === categoryName) {
+        category.subCategories.forEach((sub: SubCategoryInterface) => {
+          sub.isSelected = false;
+          this.subcategories.push(sub);
+        });
+      }
+    });
+    this.subcategories.sort((sc1, sc2) => (sc1.name > sc2.name ? 1 : -1));
   }
 
   public createNewContract(newContract: Contract) {
@@ -58,6 +82,10 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  public isSelected(subcategory: SubCategoryInterface) {
+    subcategory.isSelected = !subcategory.isSelected;
+  }
+
 
   private addContract(contract: Contract) {
     this.subscriptions.push(
@@ -70,6 +98,15 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
           console.log(errorResponse);
           this.presentToast('Error creating new contract');
         }));
+  }
+
+  private getCategories() {
+    this.subscriptions.push(
+      this.categoryService.getCategories().subscribe((categories: Category[]) => {
+        console.log(categories);
+        this.categories = categories;
+      })
+    );
   }
 
   private async presentToast(message: string) {

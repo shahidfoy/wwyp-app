@@ -6,14 +6,26 @@
     
     <ion-item>
       <ion-label>Type </ion-label>
-      <ion-select name="type" required [(ngModel)]="typeInput">
+      <ion-select name="type" required [(ngModel)]="typeInput" (ngModelChange)="changeSubCategory()">
         <ion-select-option value="sale">For Sale</ion-select-option>
         <ion-select-option value="maintenance">Maintenance</ion-select-option>
         <ion-select-option value="rental">Rental</ion-select-option>
         <ion-select-option value="construction">Construction</ion-select-option>
-        <ion-select-option value="services">Services</ion-select-option>
-        <ion-select-option value="other">Other</ion-select-option>
+        <ion-select-option value="service">Services</ion-select-option>
       </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Tags</ion-label>
+      <p>
+        <ion-chip
+          *ngFor="let subcategory of subcategories"
+          (click)="isSelected(subcategory)"
+          [color]="subcategory.isSelected ? 'primary' : 'default'">
+          <ion-label>{{ subcategory.name }}</ion-label>
+        </ion-chip>
+      </p>
+
     </ion-item>
 
     <ion-item>
