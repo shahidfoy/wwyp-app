@@ -40,7 +40,7 @@
   </ion-segment>
 
   <section *ngIf="selected === 'contracts'">
-    <div *ngIf="0 >= contracts.length">
+    <div *ngIf="0 >= contracts.length" class="no-content">
       <p>No contracts yet. Why not make a contract? <a (click)="createNewContract()">create new inquiry</a></p>
     </div>
 
@@ -68,8 +68,8 @@
   </section>
 
   <section *ngIf="selected === 'offers'">
-    <div *ngIf="0 >= offers.length">
-      <p>No offers yet. Why not make an offer? <a [routerLink]="['/marketboard/inquires']">view inquires</a></p>
+    <div *ngIf="0 >= offers.length" class="no-content">
+      <p>No offers yet. Why not make an offer? <a [routerLink]="['/marketboard/inquiries']">view inquires</a></p>
     </div>
 
     <ion-card *ngFor="let offer of offers">

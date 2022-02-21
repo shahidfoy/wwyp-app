@@ -7,11 +7,9 @@
     <ion-item>
       <ion-label>Type </ion-label>
       <ion-select name="type" required [(ngModel)]="typeInput" (ngModelChange)="changeSubCategory()">
-        <ion-select-option value="sale">For Sale</ion-select-option>
-        <ion-select-option value="maintenance">Maintenance</ion-select-option>
-        <ion-select-option value="rental">Rental</ion-select-option>
-        <ion-select-option value="construction">Construction</ion-select-option>
-        <ion-select-option value="service">Services</ion-select-option>
+        <div *ngFor="let category of categories">
+          <ion-select-option [value]="category.name">{{ category.name }}</ion-select-option>
+        </div>
       </ion-select>
     </ion-item>
 
