@@ -8,7 +8,7 @@
       <ion-label>Type </ion-label>
       <ion-select name="type" required [(ngModel)]="typeInput" (ngModelChange)="changeSubCategory()">
         <div *ngFor="let category of categories">
-          <ion-select-option [value]="category.name">{{ category.name }}</ion-select-option>
+          <ion-select-option [value]="category.name">{{ category.name | titlecase }}</ion-select-option>
         </div>
       </ion-select>
     </ion-item>
@@ -20,7 +20,7 @@
           *ngFor="let subcategory of subcategories"
           (click)="isSelected(subcategory)"
           [color]="subcategory.isSelected ? 'primary' : 'default'">
-          <ion-label>{{ subcategory.name }}</ion-label>
+          <ion-label>{{ subcategory.name | titlecase }}</ion-label>
         </ion-chip>
       </p>
 

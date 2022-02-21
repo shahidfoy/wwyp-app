@@ -105,7 +105,7 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.categoryService.getCategories().subscribe((categories: Category[]) => {
         console.log(categories);
-        this.categories = categories;
+        this.categories = categories.sort((c1, c2) => (c1.name > c2.name ? 1 : -1));
       })
     );
   }
