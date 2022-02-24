@@ -1,6 +1,17 @@
-<app-header subtitle="New Offer" subtitleIcon="create-outline"></app-header>
+<ion-header>
+  <ion-toolbar> 
+    <ion-title>
+      New Offer
+      <div class="close" (click)="dismiss()">
+        x
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <h2>New Offer</h2>
+  <p class="form-info">Use this form to create a new bid offer on this item.  
+    Once the form is submitted a new bid will be created and the owner of this item will be notified.</p>
 
   <form #newOfferForm="ngForm" (ngSubmit)="createNewOffer(newOfferForm.value)">
     <ion-item>
@@ -28,7 +39,7 @@
     </ion-button>
   </form>
 
-  <div class="offer-button-group">
+  <!-- <div class="offer-button-group">
     <ion-button class="pull-right" size="small" color="light" (click)="dismiss()">Close</ion-button>
-  </div>
+  </div> -->
 </ion-content>

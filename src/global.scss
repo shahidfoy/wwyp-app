@@ -26,6 +26,11 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+.close {
+    float: right;
+    cursor: pointer;
+}
+
 .pull-right {
     float: right;
 }
@@ -35,9 +40,9 @@
 }
 
 .truncate {
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
