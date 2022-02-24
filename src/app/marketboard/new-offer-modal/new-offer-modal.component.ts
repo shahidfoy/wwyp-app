@@ -20,6 +20,8 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
   @Input() contract: Contract;
   subscriptions: Subscription[] = [];
 
+  isLoading: boolean = false;
+
   constructor(public modalController: ModalController,
               public toastController: ToastController,
               private notificationService: NotificationService,
@@ -32,6 +34,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
   }
 
   public createNewOffer(offer: Offer) {
+    this.isLoading = true;
     offer.contract = this.contract;
     offer.userId = this.user.id;
     offer.amountType = offer.amountType.toUpperCase();
