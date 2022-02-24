@@ -1,19 +1,40 @@
-<app-header subtitle="Contract" subtitleIcon=""></app-header>
+<ion-header>
+  <ion-toolbar> 
+    <ion-title>
+      New Contract
+      <div class="close" (click)="dismiss()">
+        x
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <h2>Contract</h2>
+  <p class="form-info">Use this form to create a new inquiry for your item.  
+    Once the form is submitted a bidding contract is created for your item for others to view and bid on.</p>
 
   <form #newContractForm="ngForm" (ngSubmit)="createNewContract(newContractForm.value)">
     
     <ion-item>
       <ion-label>Type </ion-label>
-      <ion-select name="type" required [(ngModel)]="typeInput">
-        <ion-select-option value="sale">For Sale</ion-select-option>
-        <ion-select-option value="maintenance">Maintenance</ion-select-option>
-        <ion-select-option value="rental">Rental</ion-select-option>
-        <ion-select-option value="construction">Construction</ion-select-option>
-        <ion-select-option value="services">Services</ion-select-option>
-        <ion-select-option value="other">Other</ion-select-option>
+      <ion-select name="type" required [(ngModel)]="typeInput" (ngModelChange)="changeSubCategory()">
+        <div *ngFor="let category of categories">
+          <ion-select-option [value]="category.name">{{ category.name | titlecase }}</ion-select-option>
+        </div>
       </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="subcategories.length > 0">
+      <p>
+        <span>Select Tag: </span>
+        <ion-chip
+          *ngFor="let subcategory of subcategories"
+          (click)="isSelected(subcategory)"
+          [color]="subcategory.isSelected ? 'primary' : 'default'">
+          <ion-label>{{ subcategory.name | titlecase }}</ion-label>
+        </ion-chip>
+      </p>
+
     </ion-item>
 
     <ion-item>
@@ -64,8 +85,4 @@
       <span *ngIf="!isLoading && contract.id">Update</span>
     </ion-button>
   </form>
-
-  <div class="contract-button-group">
-    <ion-button class="pull-right" size="small" color="light" (click)="dismiss()">Close</ion-button>
-  </div>
 </ion-content>

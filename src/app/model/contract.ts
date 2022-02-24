@@ -1,5 +1,4 @@
 import { Offer } from "./offer";
-import { User } from "./user";
 
 export class Contract {
     public id: number;
@@ -7,6 +6,7 @@ export class Contract {
     public contractorId: number;
     public status: string;
     public type: string;
+    public subTypes: string[];
     public subject: string;
     public body: string;
     public contractImageUrls: string[];
@@ -22,6 +22,7 @@ export class Contract {
         this.contractorId = null;
         this.status = '';
         this.type = '';
+        this.subTypes = [];
         this.subject = '';
         this.body = '';
         this.contractImageUrls = [];

@@ -1,4 +1,14 @@
-<app-header subtitle="Edit Profile" subtitleIcon="create-outline"></app-header>
+<ion-header>
+  <ion-toolbar> 
+    <ion-title>
+      Edit Profile
+      <div class="close" (click)="dismiss()">
+        x
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
   <h2>Update your profile info:</h2>
 
@@ -46,6 +56,5 @@
       <ion-toggle #darkModeToggle class="pull-right" (ngModelChange)="toggleDarkTheme()" id="themeToggle" slot="end" [(ngModel)]="isDarkMode"></ion-toggle>
     </ion-item>
     <ion-button size="small" color="danger">Delete Account</ion-button>
-    <ion-button class="pull-right" size="small" color="light" (click)="dismiss()">Close</ion-button>
   </div>
 </ion-content>
