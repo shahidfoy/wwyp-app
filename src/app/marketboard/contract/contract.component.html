@@ -59,7 +59,9 @@
             <ion-label>{{ offer.username }}</ion-label>
           </ion-chip>
           {{ offer.amount }} | {{ offer.amountType }}
+          <ion-icon *ngIf="offer.userId === user.id" class="pull-right" name="trash-outline"></ion-icon>
         </h4>
+        
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>

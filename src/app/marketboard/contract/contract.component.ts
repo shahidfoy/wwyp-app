@@ -102,6 +102,7 @@ export class ContractComponent implements OnInit, OnDestroy {
     } else {
       this.subscriptions.push(
         this.offerService.findOfferByContractId(contractId, 0).subscribe((offers: Offer[]) => {
+          console.log(offers);
           this.offers = offers;
           this.getOffersUser();
         }));
