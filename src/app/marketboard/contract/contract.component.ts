@@ -1,8 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ModalController, ToastController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { Contract } from 'src/app/model/contract';
+import { CustomHttpResponse } from 'src/app/model/custom-http-response';
 import { OfferInterface } from 'src/app/model/interfaces/offer.interface';
 import { Offer } from 'src/app/model/offer';
 import { User } from 'src/app/model/user';
@@ -34,6 +36,8 @@ export class ContractComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private contractService: ContractService,
     private offerService: OfferService,
+    private router: Router,
+    private toastController: ToastController,
     private userService: UserService
   ) { }
 
@@ -60,6 +64,32 @@ export class ContractComponent implements OnInit, OnDestroy {
       }
     });
     return await modal.present();
+  }
+
+  public deleteContract(id: number) {
+    this.subscriptions.push(
+      this.contractService.deleteContract(id).subscribe(
+        (response: CustomHttpResponse) => {
+          this.presentToast('Your contract was deleted.');
+          this.router.navigateByUrl("/marketboard/profile");
+        },
+        (errorResponse: HttpErrorResponse) => {
+          console.log(errorResponse);
+          this.presentToast('Error deleting contract');
+        }));
+  }
+
+  public deleteOffer(id: number) {
+    this.subscriptions.push(
+      this.offerService.deleteOffer(id).subscribe(
+        (response: CustomHttpResponse) => {
+          this.presentToast('Your offer was deleted.');
+          setTimeout(() => window.location.reload(), 1000);
+        },
+        (errorResponse: HttpErrorResponse) => {
+          console.log(errorResponse);
+          this.presentToast('Error deleting offer');
+        }));
   }
 
   public async makeNewOffer(): Promise<void> {
@@ -102,6 +132,7 @@ export class ContractComponent implements OnInit, OnDestroy {
     } else {
       this.subscriptions.push(
         this.offerService.findOfferByContractId(contractId, 0).subscribe((offers: Offer[]) => {
+          console.log(offers);
           this.offers = offers;
           this.getOffersUser();
         }));
@@ -116,5 +147,14 @@ export class ContractComponent implements OnInit, OnDestroy {
           offer.userProfileImage = user.profileImageUrl;
         }));
     });
+  }
+
+  private async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      position: 'bottom',
+      message: message,
+      duration: 1000
+    });
+    toast.present();
   }
 }

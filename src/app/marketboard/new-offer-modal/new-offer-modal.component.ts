@@ -20,6 +20,8 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
   @Input() contract: Contract;
   subscriptions: Subscription[] = [];
 
+  isLoading: boolean = false;
+
   constructor(public modalController: ModalController,
               public toastController: ToastController,
               private notificationService: NotificationService,
@@ -32,6 +34,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
   }
 
   public createNewOffer(offer: Offer) {
+    this.isLoading = true;
     offer.contract = this.contract;
     offer.userId = this.user.id;
     offer.amountType = offer.amountType.toUpperCase();
@@ -61,7 +64,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
         (response: Offer) => {
           this.sendNotification(response, `${this.user.username} sent you a new offer for ${response.amount} | ${response.amountType}`);
           this.presentToast('New offer created successfully');
-          setTimeout(() => window.location.reload(), 2000);
+          setTimeout(() => window.location.reload(), 1000);
         },
         (errorResponse: HttpErrorResponse) => {
           console.log(errorResponse);
@@ -97,7 +100,7 @@ export class NewOfferModalComponent implements OnInit, OnDestroy {
           (response: Offer) => {
             this.sendNotification(response, `${this.user.username} updated their offer to ${response.amount} | ${response.amountType}`);
             this.presentToast('Offer updated successfully');
-            setTimeout(() => window.location.reload(), 2000);
+            setTimeout(() => window.location.reload(), 1000);
         },
         (errorResponse: HttpErrorResponse) => {
           console.log(errorResponse);

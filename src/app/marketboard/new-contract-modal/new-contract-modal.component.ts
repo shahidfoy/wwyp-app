@@ -20,6 +20,7 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
   @Input() user: User;
   @Input() contract: Contract;
 
+  isLoading: boolean = false;
   typeInput: string;
   subjectInput: string;
   bodyInput: string;
@@ -65,6 +66,7 @@ export class NewContractModalComponent implements OnInit, OnDestroy {
   }
 
   public createNewContract(newContract: Contract) {
+    this.isLoading = true;
     if (this.contract.id) {
       this.updateContract(this.contract, newContract);
     } else {

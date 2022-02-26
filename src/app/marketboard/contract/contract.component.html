@@ -20,6 +20,7 @@
               <ion-icon name="caret-down-circle-outline"></ion-icon>
               <ion-label>seeking lowest bid</ion-label>
             </ion-chip>
+            <ion-icon *ngIf="cUser.id === user.id" class="pull-right delete" name="trash-outline" (click)="deleteContract(contract.id)"></ion-icon>
           </ng-container>
           <br> {{ contract.subject }}
         </h2>
@@ -59,7 +60,9 @@
             <ion-label>{{ offer.username }}</ion-label>
           </ion-chip>
           {{ offer.amount }} | {{ offer.amountType }}
+          <ion-icon *ngIf="offer.userId === user.id" class="pull-right" name="trash-outline" (click)="deleteOffer(offer.id)"></ion-icon>
         </h4>
+        
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
